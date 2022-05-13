@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<resources>
+    <string name="err_amount_required">Amount is required.</string>
+    <string name="err_acct_number_empty">Account Number cannot be empty.</string>
+    <string name="err_bank_name_empty">Bank Name cannot be empty.</string>
+    <string name="err_acct_holder_empty">Account Holder\'s Name cannot be empty.</string>
+    <string name="err_init_balance_empty">Initial balance cannot be empty.</string>
+</resources>

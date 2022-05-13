@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.thebankofpirates.R;
 import com.example.thebankofpirates.code.sql.ConnectionHelper;
+import com.example.thebankofpirates.code.ui.TransactionActivity;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.sql.Connection;
@@ -26,7 +27,7 @@ import java.sql.Statement;
 
 
 public class LoginActivity extends AppCompatActivity {
-    private Connection connection;
+//    private Connection connection;
     ProgressDialog progressDialog;
     TextInputLayout emailTextInputLayout,passTextInputLayout;
 
@@ -106,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void login_user(String email, String password){
-
+/*
         try{
             ConnectionHelper connectionHelper = new ConnectionHelper();
             connection = connectionHelper.getConnection();
@@ -125,6 +126,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         }catch(Exception ex){
             Log.e("Invalid Authentication!",ex.getMessage());
+        }
+*/      if (email.equals("admin") && password.equals("123")) {
+            Intent intent = new Intent(LoginActivity.this, TransactionActivity.class);
+            startActivity(intent);
+            finish();
+        }else{
+            Toast.makeText(LoginActivity.this, "Wrong Credentials!", Toast.LENGTH_SHORT).show();
         }
 
 

@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">TheBankOfPirates</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="account_text">Account No.</string>
+    <string name="amount_text">Amount</string>
+    <string name="date_text">Date</string>
+    <string name="submit">Submit</string>
+    <string name="withdrawal_text">Withdrawal</string>
+    <string name="deposit_text">Deposit</string>
+    <string name="transaction_type_text">Type</string>
+    <string name="bank_text">Bank</string>
+    <string name="account_holder_text">Account Holder</string>
+    <string name="deposit_amount">Deposit Amount</string>
+    <string name="add_deposit_text">Deposit</string>
+    <string name="msg_account_update_unable">"Unable to update the account : "</string>
+    <string name="msg_ok">Ok</string>
+    <string name="label_withdrawal">Withdrawal</string>
+    <string name="label_deposit">Deposit</string>
+    <string name="label_details">Details</string>
 </resources>
