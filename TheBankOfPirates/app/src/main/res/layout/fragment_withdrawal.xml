@@ -9,7 +9,7 @@
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/activity_vertical_margin"
             android:rowCount="6"
-            tools:context=".code.ui.TransactionActivity">
+            tools:context=".MainActivity$PlaceholderFragment">
 
     <TextView
         android:id="@+id/account_text_tv"
@@ -75,19 +75,22 @@
         android:inputType="numberDecimal"/>
 
     <TextView
-        android:id="@+id/permission_tv"
+        android:id="@+id/date_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_column="0"
         android:layout_row="3"
-        android:text="@string/special_permissions"
+        android:text="@string/date_text"
         android:textAppearance="?android:attr/textAppearanceMedium"/>
-    <Spinner
-        android:id="@+id/permission_selector"
-        android:layout_width="220dp"
+
+    <DatePicker
+        android:id="@+id/date_selector"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_column="1"
-        android:layout_row="3"/>
+        android:layout_row="3"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"/>
 
     <Button
         android:id="@+id/submit_amount"

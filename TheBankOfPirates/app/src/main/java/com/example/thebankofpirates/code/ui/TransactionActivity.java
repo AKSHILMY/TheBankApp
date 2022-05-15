@@ -63,29 +63,33 @@ public class TransactionActivity extends AppCompatActivity {
             // Return the respective fragment.
             switch (position) {
                 case 0:
-                    return TransactionFragment.newInstance(transactionManager);
+                    return WithdrawalFragment.newInstance(transactionManager);
                 case 1:
+                    return DepositFragment.newInstance(transactionManager);
+                case 2:
                     return DetailsFragment.newInstance(transactionManager);
                 default:
-                    return TransactionFragment.newInstance(transactionManager);
+                    return WithdrawalFragment.newInstance(transactionManager);
             }
         }
 
         @Override
         public int getCount() {
-
-            return 2;
+            // Show 3 total pages.
+            return 3;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return getString(R.string.label_transaction);
+                    return getString(R.string.label_withdrawal);
                 case 1:
+                    return getString(R.string.label_deposit);
+                case 2:
                     return getString(R.string.label_details);
                 default:
-                    return getString(R.string.label_transaction);
+                    return getString(R.string.label_withdrawal);
             }
         }
     }
