@@ -24,7 +24,7 @@ import static com.example.thebankofpirates.code.Constants.TRANSACTION_MANAGER;
 /**
  *
  */
-public class WithdrawalFragment extends Fragment implements View.OnClickListener {
+public class TransactionFragment extends Fragment implements View.OnClickListener {
     private Button submitButton;
     private EditText amount;
     private Spinner accountSelector;
@@ -32,15 +32,15 @@ public class WithdrawalFragment extends Fragment implements View.OnClickListener
     private DatePicker datePicker;
     private TransactionManager currentTransactionManager;
 
-    public static WithdrawalFragment newInstance(TransactionManager transactionManager) {
-        WithdrawalFragment withdrawalFragment = new WithdrawalFragment();
+    public static TransactionFragment newInstance(TransactionManager transactionManager) {
+        TransactionFragment transactionFragment = new TransactionFragment();
         Bundle args = new Bundle();
         args.putSerializable(TRANSACTION_MANAGER, transactionManager);
-        withdrawalFragment.setArguments(args);
-        return withdrawalFragment;
+        transactionFragment.setArguments(args);
+        return transactionFragment;
     }
 
-    public WithdrawalFragment() {
+    public TransactionFragment() {
     }
 
     @Override

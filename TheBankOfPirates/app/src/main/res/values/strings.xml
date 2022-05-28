@@ -15,7 +15,7 @@
     <string name="add_deposit_text">Deposit</string>
     <string name="msg_account_update_unable">"Unable to update the account : "</string>
     <string name="msg_ok">Ok</string>
-    <string name="label_withdrawal">Withdrawal</string>
+    <string name="label_transaction">Transaction</string>
     <string name="label_deposit">Deposit</string>
     <string name="label_details">Details</string>
 </resources>
