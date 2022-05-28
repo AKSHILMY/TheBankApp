@@ -2,7 +2,6 @@
 package com.example.thebankofpirates.code.ui;
 
 import android.os.Bundle;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.thebankofpirates.R;
 
@@ -20,6 +20,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.thebankofpirates.code.TransactionManager;
 import static com.example.thebankofpirates.code.Constants.TRANSACTION_MANAGER;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  *
@@ -31,6 +34,7 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
     private RadioGroup expenseTypeGroup;
     private DatePicker datePicker;
     private TransactionManager currentTransactionManager;
+    Calendar c;
 
     public static TransactionFragment newInstance(TransactionManager transactionManager) {
         TransactionFragment transactionFragment = new TransactionFragment();
@@ -45,9 +49,15 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_withdrawal, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_transaction, container, false);
         submitButton = (Button) rootView.findViewById(R.id.submit_amount);
         submitButton.setOnClickListener(this);
+
+        c = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String strDate = sdf.format(c.getTime());
+        TextView dateShower=  (TextView) rootView.findViewById(R.id.date_shower);
+        dateShower.setText(strDate);
 
         amount = (EditText) rootView.findViewById(R.id.amount);
         accountSelector = (Spinner) rootView.findViewById(R.id.account_selector);
@@ -63,7 +73,7 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
         expenseTypeGroup = (RadioGroup) rootView.findViewById(R.id.expense_type_group);
         RadioButton expenseType = (RadioButton) rootView.findViewById(R.id.expense);
         RadioButton incomeType = (RadioButton) rootView.findViewById(R.id.income);
-        datePicker = (DatePicker) rootView.findViewById(R.id.date_selector);
+//        datePicker = (DatePicker) rootView.findViewById(R.id.date_selector);
         return rootView;
     }
 

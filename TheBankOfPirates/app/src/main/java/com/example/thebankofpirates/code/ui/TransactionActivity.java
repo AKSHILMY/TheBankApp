@@ -41,10 +41,7 @@ public class TransactionActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-//        db.addAccount(new Account("12345S","BANK02","AKL",325.89));
-        /***  Begin generating dummy data for In-Memory implementation  ***/
-//        expenseManager = new PersistentMemoryExpenseManager();
-        /*** END ***/
+
     }
 
     /**
@@ -73,7 +70,7 @@ public class TransactionActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
+            // Show 2 total pages.
             return 2;
         }
 

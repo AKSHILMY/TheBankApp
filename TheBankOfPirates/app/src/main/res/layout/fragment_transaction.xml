@@ -83,14 +83,22 @@
         android:text="@string/date_text"
         android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-    <DatePicker
-        android:id="@+id/date_selector"
+<!--    <DatePicker-->
+<!--        android:id="@+id/date_selector"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_column="1"-->
+<!--        android:layout_row="3"-->
+<!--        android:calendarViewShown="false"-->
+<!--        android:datePickerMode="spinner"/>-->
+    <TextView
+        android:id="@+id/date_shower"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_column="1"
         android:layout_row="3"
-        android:calendarViewShown="false"
-        android:datePickerMode="spinner"/>
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
 
     <Button
         android:id="@+id/submit_amount"
