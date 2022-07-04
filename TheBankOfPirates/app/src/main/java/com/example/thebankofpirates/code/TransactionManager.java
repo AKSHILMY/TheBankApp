@@ -16,10 +16,19 @@
 
 package com.example.thebankofpirates.code;
 
+import com.example.thebankofpirates.code.data.AccountDAO;
+import com.example.thebankofpirates.code.data.TransactionDAO;
+import com.example.thebankofpirates.code.data.model.Account;
+import com.example.thebankofpirates.code.data.model.TransactionType;
+import com.example.thebankofpirates.code.data.model.Transaction;
+import com.example.thebankofpirates.code.data.exception.InvalidAccountException;
+
+
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
 
 
 /**
@@ -27,103 +36,103 @@ import java.util.List;
  * method to setup the DAO objects depending on the implementation.
  */
 public abstract class TransactionManager implements Serializable {
-//    private AccountDAO accountsHolder;
-//    private TransactionDAO transactionsHolder;
-//
-//    /***
-//     * Get list of account numbers as String.
-//     *
-//     * @return
-//     */
-//    public List<String> getAccountNumbersList() {
-//        return accountsHolder.getAccountNumbersList();
-//    }
-//
-//    /***
-//     * Update the account balance.
-//     *
-//     * @param accountNo
-//     * @param day
-//     * @param month
-//     * @param year
-//     * @param expenseType
-//     * @param amount
-//     * @throws InvalidAccountException
-//     */
-//    public void updateAccountBalance(String accountNo, int day, int month, int year, ExpenseType expenseType,
-//                                     String amount) throws InvalidAccountException {
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.set(year, month, day);
-//        Date transactionDate = calendar.getTime();
-//
-//        if (!amount.isEmpty()) {
-//            double amountVal = Double.parseDouble(amount);
-//            transactionsHolder.logTransaction(transactionDate, accountNo, expenseType, amountVal);
-//            accountsHolder.updateBalance(accountNo, expenseType, amountVal);
-//        }
-//    }
-//
-//    /***
-//     * Get a list of transaction logs.
-//     *
-//     * @return
-//     */
-//    public List<Transaction> getTransactionLogs() {
-//        return transactionsHolder.getPaginatedTransactionLogs(10);
-//    }
-//
-//    /***
-//     * Add account to the accounts dao.
-//     *
-//     * @param accountNo
-//     * @param bankName
-//     * @param accountHolderName
-//     * @param initialBalance
-//     */
-//    public void addAccount(String accountNo, String bankName, String accountHolderName, double initialBalance) {
-//        Account account = new Account(accountNo, bankName, accountHolderName, initialBalance);
-//        accountsHolder.addAccount(account);
-//    }
-//
-//    /***
-//     * Get access to the AccountDAO concrete implementation.
-//     *
-//     * @return
-//     */
-//    public AccountDAO getAccountsDAO() {
-//        return accountsHolder;
-//    }
-//
-//    /***
-//     * Set the concrete AccountDAO implementation.
-//     *
-//     * @param accountDAO
-//     */
-//    public void setAccountsDAO(AccountDAO accountDAO) {
-//        this.accountsHolder = accountDAO;
-//    }
-//
-//    /***
-//     * Get access to the TransactionDAO concrete implementation.
-//     *
-//     * @return
-//     */
-//    public TransactionDAO getTransactionsDAO() {
-//        return transactionsHolder;
-//    }
-//
-//    /***
-//     * Set the concrete TransactionDAO implementation.
-//     *
-//     * @param transactionDAO
-//     */
-//    public void setTransactionsDAO(TransactionDAO transactionDAO) {
-//        this.transactionsHolder = transactionDAO;
-//    }
-//
-//    /***
-//     * This method should be implemented by the concrete implementation of this class. It will dictate how the DAO
-//     * objects will be initialized.
-//     */
-//    public abstract void setup() throws ExpenseManagerException;
+    private AccountDAO accountsHolder;
+    private TransactionDAO transactionsHolder;
+
+    /***
+     * Get list of account numbers as String.
+     *
+     * @return
+     */
+    public List<String> getAccountNumbersList() {
+        return accountsHolder.getAccountNumbersList();
+    }
+
+    /***
+     * Update the account balance.
+     *
+     * @param accountNo
+     * @param day
+     * @param month
+     * @param year
+     * @param transactionType
+     * @param amount
+     * @throws InvalidAccountException
+     */
+    public void updateAccountBalance(String accountNo, int day, int month, int year, TransactionType transactionType,
+                                     String amount) throws InvalidAccountException {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day);
+        Date transactionDate = calendar.getTime();
+
+        if (!amount.isEmpty()) {
+            double amountVal = Double.parseDouble(amount);
+            transactionsHolder.logTransaction(transactionDate, accountNo, transactionType, amountVal);
+            accountsHolder.updateBalance(accountNo, transactionType, amountVal);
+        }
+    }
+
+    /***
+     * Get a list of transaction logs.
+     *
+     * @return
+     */
+    public List<Transaction> getTransactionLogs() {
+        return transactionsHolder.getPaginatedTransactionLogs(10);
+    }
+
+    /***
+     * Add account to the accounts dao.
+     *
+     * @param accountNo
+     * @param bankName
+     * @param accountHolderName
+     * @param initialBalance
+     */
+    public void addAccount(String accountNo, String bankName, String accountHolderName, double initialBalance) {
+        Account account = new Account(accountNo, bankName, accountHolderName, initialBalance);
+        accountsHolder.addAccount(account);
+    }
+
+    /***
+     * Get access to the AccountDAO concrete implementation.
+     *
+     * @return
+     */
+    public AccountDAO getAccountsDAO() {
+        return accountsHolder;
+    }
+
+    /***
+     * Set the concrete AccountDAO implementation.
+     *
+     * @param accountDAO
+     */
+    public void setAccountsDAO(AccountDAO accountDAO) {
+        this.accountsHolder = accountDAO;
+    }
+
+    /***
+     * Get access to the TransactionDAO concrete implementation.
+     *
+     * @return
+     */
+    public TransactionDAO getTransactionsDAO() {
+        return transactionsHolder;
+    }
+
+    /***
+     * Set the concrete TransactionDAO implementation.
+     *
+     * @param transactionDAO
+     */
+    public void setTransactionsDAO(TransactionDAO transactionDAO) {
+        this.transactionsHolder = transactionDAO;
+    }
+
+    /***
+     * This method should be implemented by the concrete implementation of this class. It will dictate how the DAO
+     * objects will be initialized.
+     */
+    public abstract void setup() throws TransactionManagerException;
 }

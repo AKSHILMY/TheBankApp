@@ -27,7 +27,7 @@ import java.sql.Statement;
 
 
 public class LoginActivity extends AppCompatActivity {
-//    private Connection connection;
+    private Connection connection;
     ProgressDialog progressDialog;
     TextInputLayout emailTextInputLayout,passTextInputLayout;
 
@@ -107,27 +107,28 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void login_user(String email, String password){
-/*
-        try{
-            ConnectionHelper connectionHelper = new ConnectionHelper();
-            connection = connectionHelper.getConnection();
-            Toast.makeText(LoginActivity.this, "Login user method called : "+connection, Toast.LENGTH_LONG).show();
 
-            if (connection!=null){
-                String query = "SELECT * FROM login WHERE email="+email+" AND password="+password+";";
-                Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery(query);
-                if (resultSet!=null){
-                    Toast.makeText(LoginActivity.this, "Logged successfully with : "+email, Toast.LENGTH_LONG).show();
-                }else{
-                    Toast.makeText(LoginActivity.this, "Wrong Credentials!", Toast.LENGTH_SHORT).show();
-                }
+//        try{
+//            ConnectionHelper connectionHelper = new ConnectionHelper();
+//            connection = connectionHelper.getConnection();
+//            Toast.makeText(LoginActivity.this, "Login user method called : "+connection, Toast.LENGTH_LONG).show();
+//
+//            if (connection!=null){
+//                String query = "SELECT * FROM agent WHERE Agent_ID=00001 AND Name=S.Raman;";
+//                Statement statement = connection.createStatement();
+//                ResultSet resultSet = statement.executeQuery(query);
+//                if (resultSet!=null){
+//                    Toast.makeText(LoginActivity.this, "Logged successfully with : "+email, Toast.LENGTH_LONG).show();
+//                }else{
+//                    Toast.makeText(LoginActivity.this, "Wrong Credentials!", Toast.LENGTH_SHORT).show();
+//                }
+//
+//            }
+//        }catch(Exception ex){
+//            Log.e("Invalid Authentication!",ex.getMessage());
+//        }
 
-            }
-        }catch(Exception ex){
-            Log.e("Invalid Authentication!",ex.getMessage());
-        }
-*/      if (email.equals("admin") && password.equals("123")) {
+        if (email.equals("admin") && password.equals("123")) {
             Intent intent = new Intent(LoginActivity.this, TransactionActivity.class);
             startActivity(intent);
             finish();

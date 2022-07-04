@@ -28,7 +28,7 @@ public class ConnectionHelper {
         String connectionURL = null;
         try{
             String DRIVER = "com.mysql.jdbc.Driver";
-            String jdbcUrl = "jdbc:mysql://192.168.43.17/bank_of_pirates";
+            String jdbcUrl = "jdbc:mysql://192.168.137.1:3306/pirates";
             Class.forName(DRIVER);
             connection = DriverManager.getConnection(jdbcUrl,username,password);
         }catch(Exception ex){

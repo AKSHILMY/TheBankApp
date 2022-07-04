@@ -1,6 +1,7 @@
 
 package com.example.thebankofpirates.code.ui;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +17,13 @@ import android.widget.TextView;
 
 import com.example.thebankofpirates.R;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.example.thebankofpirates.code.TransactionManager;
+import com.example.thebankofpirates.code.data.exception.InvalidAccountException;
+import com.example.thebankofpirates.code.data.model.TransactionType;
+
 import static com.example.thebankofpirates.code.Constants.TRANSACTION_MANAGER;
 
 import java.text.SimpleDateFormat;
@@ -31,7 +36,7 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
     private Button submitButton;
     private EditText amount;
     private Spinner accountSelector;
-    private RadioGroup expenseTypeGroup;
+    private RadioGroup transactionTypeGroup;
     private DatePicker datePicker;
     private TransactionManager currentTransactionManager;
     Calendar c;
@@ -70,7 +75,7 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
         }
         accountSelector.setAdapter(adapter);
 
-        expenseTypeGroup = (RadioGroup) rootView.findViewById(R.id.expense_type_group);
+        transactionTypeGroup = (RadioGroup) rootView.findViewById(R.id.expense_type_group);
         RadioButton expenseType = (RadioButton) rootView.findViewById(R.id.expense);
         RadioButton incomeType = (RadioButton) rootView.findViewById(R.id.income);
 //        datePicker = (DatePicker) rootView.findViewById(R.id.date_selector);
@@ -83,7 +88,7 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
             case R.id.submit_amount:
                 String selectedAccount = (String) accountSelector.getSelectedItem();
                 String amountStr = amount.getText().toString();
-                RadioButton checkedType = (RadioButton) getActivity().findViewById(expenseTypeGroup
+                RadioButton checkedType = (RadioButton) getActivity().findViewById(transactionTypeGroup
                         .getCheckedRadioButtonId());
                 String type = (String) checkedType.getText();
 
@@ -95,23 +100,23 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
                     amount.setError(getActivity().getString(R.string.err_amount_required));
                 }
 
-//                if (currentExpenseManager != null) {
-//                    try {
-//                        currentExpenseManager.updateAccountBalance(selectedAccount, day, month, year,
-//                                ExpenseType.valueOf(type.toUpperCase()), amountStr);
-//                    } catch (InvalidAccountException e) {
-//                        new AlertDialog.Builder(this.getActivity())
-//                                .setTitle(this.getString(R.string.msg_account_update_unable) + selectedAccount)
-//                                .setMessage(e.getMessage())
-//                                .setNeutralButton(this.getString(R.string.msg_ok),
-//                                        new DialogInterface.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(DialogInterface dialog, int which) {
-//                                        dialog.cancel();
-//                                    }
-//                                }).setIcon(android.R.drawable.ic_dialog_alert).show();
-//                    }
-//                }
+                if (currentTransactionManager != null) {
+                    try {
+                        currentTransactionManager.updateAccountBalance(selectedAccount, day, month, year,
+                                TransactionType.valueOf(type.toUpperCase()), amountStr);
+                    } catch (InvalidAccountException e) {
+                        new AlertDialog.Builder(this.getActivity())
+                                .setTitle(this.getString(R.string.msg_account_update_unable) + selectedAccount)
+                                .setMessage(e.getMessage())
+                                .setNeutralButton(this.getString(R.string.msg_ok),
+                                        new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                }).setIcon(android.R.drawable.ic_dialog_alert).show();
+                    }
+                }
                 amount.getText().clear();
                 break;
         }
