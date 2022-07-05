@@ -1,12 +1,12 @@
-import express from "express";
+const express = require('express');
 
-import {
+const {
   getCustomers,
   createCustomer,
   getCustomer,
   deleteCustomer,
   updateCustomer,
-} from "../controllers/customers.js";
+}  =  require("../controllers/customers.js");
 
 const router = express.Router();
 

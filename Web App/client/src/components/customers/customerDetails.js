@@ -44,15 +44,15 @@ function CustomerDetails({ customers, updateCustomer }) {
           <tbody>
             <tr>
               <th>Account Number</th>
-              <td>{customerDetail.bank.cardNumber}</td>
+              <td>{customerDetail.Account_No}</td>
             </tr>
             <tr>
-              <th>First Name</th>
+              <th>Name</th>
               <td>
                 <Form.Control
                   type="text"
                   required
-                  defaultValue={customerDetail.firstName}
+                  defaultValue={customerDetail.Name}
                   disabled={enableEdit}
                   onChange={(e) => {
                     handleChange({ firstName: e.target.value });
@@ -94,7 +94,7 @@ function CustomerDetails({ customers, updateCustomer }) {
                 <Form.Control
                   type="text"
                   required
-                  defaultValue={customerDetail.email}
+                  defaultValue={customerDetail.Email}
                   disabled={enableEdit}
                   onChange={(e) => {
                     handleChange({ email: e.target.value });

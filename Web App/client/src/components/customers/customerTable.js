@@ -41,22 +41,22 @@ function CustomerTable({ customers }) {
               <th>Account Number</th>
               <th>Full Name</th>
               <th>Phone</th>
-              <th>Agent</th>
+              {/* <th>Agent</th> */}
             </tr>
           </thead>
           <tbody>
-            {filteredCustomer.map((customer) => {
+            {customers.map((customer) => {
               return (
                 <tr
                   onClick={() => {
-                    rowClickHAndler(customer.id);
+                    rowClickHAndler(customer.Customer_ID);
                   }}
-                  key={customer.id}
+                  key={customer.Customer_ID}
                 >
-                  <td>{customer.bank.cardNumber}</td>
-                  <td>{`${customer.firstName} ${customer.lastName}`}</td>
-                  <td>{customer.phone}</td>
-                  <td>{customer.maidenName}</td>
+                  <td>{customer.Account_No}</td>
+                  <td>{customer.Name}</td>
+                  <td>{customer.Phone_No}</td>
+                  {/* <td>{customer.maidenName}</td> */}
                 </tr>
               );
             })}

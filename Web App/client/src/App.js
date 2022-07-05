@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState } from "react";
+import React, { useState,useEffect} from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import users from "./users.json";
 import CustomerTable from "./components/customers/customerTable";
@@ -8,9 +8,20 @@ import CustomerDetails from "./components/customers/customerDetails";
 import NavBar from "./components/header/navBar";
 import Footer from "./components/footer/footer";
 import Dashboard from "./components/dashboard/dashboard";
+import axios from "axios";
 
 function App() {
-  const [customers, setCustomers] = useState(users.users);
+  const [customers, setCustomers] = useState([]);
+  useEffect(()=>{
+    axios.get('/customers')
+  .then(result => {
+    console.log(result.data);
+    setCustomers(result.data.data);
+  })
+
+  },[])
+  
+
 
   function addCustomerHandler(customer) {
     console.log(customer);
