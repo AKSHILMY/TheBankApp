@@ -20,5 +20,5 @@ package com.example.thebankofpirates.code;
  *
  */
 public class Constants {
-    public static final String TRANSACTION_MANAGER = "expense-manager";
+    public static final String TRANSACTION_MANAGER = "transaction-manager";
 }

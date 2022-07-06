@@ -22,17 +22,27 @@ import java.util.Date;
  * This POJO holds the information regarding a single transaction.
  */
 public class Transaction {
-    private Date date;
+    private String transactionID;
+    private String agentID;
     private String accountNo;
     private TransactionType transactionType;
     private double amount;
+    private String specialRequestStatus;
 
-    public Date getDate() {
-        return date;
+    public String getTransactionID() {
+        return transactionID;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setTransactionID(String transactionID) {
+        this.transactionID = transactionID;
+    }
+
+    public String getAgentID() {
+        return agentID;
+    }
+
+    public void setAgentID(String agentID) {
+        this.agentID = agentID;
     }
 
     public String getAccountNo() {
@@ -43,11 +53,11 @@ public class Transaction {
         this.accountNo = accountNo;
     }
 
-    public TransactionType getExpenseType() {
+    public TransactionType getTransactionType() {
         return transactionType;
     }
 
-    public void setExpenseType(TransactionType transactionType) {
+    public void setTransactionType(TransactionType transactionType) {
         this.transactionType = transactionType;
     }
 
@@ -59,13 +69,22 @@ public class Transaction {
         this.amount = amount;
     }
 
+    public String getSpecialRequestStatus() {
+        return specialRequestStatus;
+    }
 
+    public void setSpecialRequestStatus(String specialRequestStatus) {
+        this.specialRequestStatus = specialRequestStatus;
+    }
 
-    public Transaction(Date date, String accountNo,
-                       TransactionType transactionType, double amount) {
-        this.date = date;
+    public Transaction(String transactionID,
+                       TransactionType transactionTyp,
+                       double amount) {
+        this.transactionID = transactionID;
+        this.agentID = agentID;
         this.accountNo = accountNo;
         this.transactionType = transactionType;
         this.amount = amount;
+        this.specialRequestStatus=specialRequestStatus;
     }
 }

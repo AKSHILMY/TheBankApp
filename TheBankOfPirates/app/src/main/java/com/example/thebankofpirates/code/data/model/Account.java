@@ -21,9 +21,10 @@ package com.example.thebankofpirates.code.data.model;
  */
 public class Account {
     private String accountNo;
-    private String bankName;
-    private String accountHolderName;
     private double balance;
+    private String accountType;
+    private String specialRequestPermission;
+
 
     public String getAccountNo() {
         return accountNo;
@@ -33,20 +34,20 @@ public class Account {
         this.accountNo = accountNo;
     }
 
-    public String getBankName() {
-        return bankName;
+    public String getAccountType() {
+        return accountType;
     }
 
-    public void setBankName(String bankName) {
-        this.bankName = bankName;
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
     }
 
-    public String getAccountHolderName() {
-        return accountHolderName;
+    public String getSpecialRequestPermission() {
+        return specialRequestPermission;
     }
 
-    public void setAccountHolderName(String accountHolderName) {
-        this.accountHolderName = accountHolderName;
+    public void setSpecialRequestPermission(String specialRequestPermission) {
+        this.specialRequestPermission = specialRequestPermission;
     }
 
     public double getBalance() {
@@ -57,10 +58,10 @@ public class Account {
         this.balance = balance;
     }
 
-    public Account(String accountNo, String bankName, String accountHolderName, double balance) {
+    public Account(String accountNo, double balance, String accountType, String specialRequestPermission) {
         this.accountNo = accountNo;
-        this.bankName = bankName;
-        this.accountHolderName = accountHolderName;
         this.balance = balance;
+        this.accountType = accountType;
+        this.specialRequestPermission = specialRequestPermission;
     }
 }

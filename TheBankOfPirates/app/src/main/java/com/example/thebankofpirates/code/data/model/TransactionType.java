@@ -20,5 +20,5 @@ package com.example.thebankofpirates.code.data.model;
  * This ENUM holds the types of different expenditures.
  */
 public enum TransactionType {
-    EXPENSE, INCOME
+    WITHDRAW, DEPOSIT
 }
