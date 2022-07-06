@@ -31,12 +31,11 @@ public interface TransactionDAO {
     /***
      * Log the transaction requested by the user.
      *
-     * @param date        - date of the transaction
      * @param accountNo   - account number involved
      * @param transactionType - type of the expense
      * @param amount      - amount involved
      */
-    public void logTransaction(Date date, String accountNo, TransactionType transactionType, double amount);
+    public void logTransaction(String accountNo, TransactionType transactionType, double amount);
 
     /***
      * Return all the transactions logged.

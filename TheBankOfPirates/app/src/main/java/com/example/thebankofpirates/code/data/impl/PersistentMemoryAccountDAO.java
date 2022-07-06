@@ -24,33 +24,6 @@ public class PersistentMemoryAccountDAO implements AccountDAO {
         dbHelper = new DatabaseHelper(context);
 
     }
-
-    @Override
-    public List<String> getAccountNumbersList() {
-        return new ArrayList<>(this.dbHelper.getAccounts().keySet());
-
-    }
-
-    @Override
-    public List<Account> getAccountsList() {
-        return new ArrayList<>(this.dbHelper.getAccounts().values());
-    }
-
-    @Override
-    public Account getAccount(String accountNo) throws InvalidAccountException {
-        return this.dbHelper.getAccounts().get(accountNo);
-    }
-
-    @Override
-    public void addAccount(Account account) {
-        dbHelper.addAccount(account);
-    }
-
-    @Override
-    public void removeAccount(String accountNo) throws InvalidAccountException {
-        dbHelper.removeAccount(accountNo);
-    }
-
     @Override
     public void updateBalance(String accountNo, TransactionType transactionType, double amount) throws InvalidAccountException {
         if (!dbHelper.getAccounts().containsKey(accountNo)) {
@@ -60,13 +33,20 @@ public class PersistentMemoryAccountDAO implements AccountDAO {
         Account account = dbHelper.getAccounts().get(accountNo);
         // specific implementation based on the transaction type
         switch (transactionType) {
-            case EXPENSE:
+            case WITHDRAW:
                 account.setBalance(account.getBalance() - amount);
                 break;
-            case INCOME:
+            case DEPOSIT:
                 account.setBalance(account.getBalance() + amount);
                 break;
         }
         dbHelper.updateAccount(account);
     }
+
+    @Override
+    public List<String> getAccountNumbersList() {
+        return new ArrayList<>(this.dbHelper.getAccounts().keySet());
+
+    }
+
 }

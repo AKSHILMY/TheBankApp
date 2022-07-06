@@ -37,9 +37,8 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
     private EditText amount;
     private Spinner accountSelector;
     private RadioGroup transactionTypeGroup;
-    private DatePicker datePicker;
     private TransactionManager currentTransactionManager;
-    Calendar c;
+
 
     public static TransactionFragment newInstance(TransactionManager transactionManager) {
         TransactionFragment transactionFragment = new TransactionFragment();
@@ -58,20 +57,14 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
         submitButton = (Button) rootView.findViewById(R.id.submit_amount);
         submitButton.setOnClickListener(this);
 
-        c = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String strDate = sdf.format(c.getTime());
-        TextView dateShower=  (TextView) rootView.findViewById(R.id.date_shower);
-        dateShower.setText(strDate);
-
         amount = (EditText) rootView.findViewById(R.id.amount);
         accountSelector = (Spinner) rootView.findViewById(R.id.account_selector);
         currentTransactionManager = (TransactionManager) getArguments().get(TRANSACTION_MANAGER);
         ArrayAdapter<String> adapter =
                 null;
         if (currentTransactionManager != null) {
-//            adapter = new ArrayAdapter<>(this.getActivity(), R.layout.support_simple_spinner_dropdown_item,
-////                    currentExpenseManager.getAccountNumbersList());
+            adapter = new ArrayAdapter<>(this.getActivity(), R.layout.support_simple_spinner_dropdown_item,
+                 currentTransactionManager.getAccountNumbersList());
         }
         accountSelector.setAdapter(adapter);
 
@@ -92,17 +85,13 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
                         .getCheckedRadioButtonId());
                 String type = (String) checkedType.getText();
 
-                int day = datePicker.getDayOfMonth();
-                int month = datePicker.getMonth();
-                int year = datePicker.getYear();
-
                 if (amountStr.isEmpty()) {
                     amount.setError(getActivity().getString(R.string.err_amount_required));
                 }
 
                 if (currentTransactionManager != null) {
                     try {
-                        currentTransactionManager.updateAccountBalance(selectedAccount, day, month, year,
+                        currentTransactionManager.updateAccountBalance(selectedAccount,
                                 TransactionType.valueOf(type.toUpperCase()), amountStr);
                     } catch (InvalidAccountException e) {
                         new AlertDialog.Builder(this.getActivity())

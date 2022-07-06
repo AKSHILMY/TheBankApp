@@ -52,22 +52,17 @@ public abstract class TransactionManager implements Serializable {
      * Update the account balance.
      *
      * @param accountNo
-     * @param day
-     * @param month
-     * @param year
+
      * @param transactionType
      * @param amount
      * @throws InvalidAccountException
      */
-    public void updateAccountBalance(String accountNo, int day, int month, int year, TransactionType transactionType,
+    public void updateAccountBalance(String accountNo,TransactionType transactionType,
                                      String amount) throws InvalidAccountException {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, day);
-        Date transactionDate = calendar.getTime();
 
         if (!amount.isEmpty()) {
             double amountVal = Double.parseDouble(amount);
-            transactionsHolder.logTransaction(transactionDate, accountNo, transactionType, amountVal);
+            transactionsHolder.logTransaction(accountNo, transactionType, amountVal);
             accountsHolder.updateBalance(accountNo, transactionType, amountVal);
         }
     }
@@ -85,14 +80,10 @@ public abstract class TransactionManager implements Serializable {
      * Add account to the accounts dao.
      *
      * @param accountNo
-     * @param bankName
-     * @param accountHolderName
-     * @param initialBalance
+     * @param balance
+     * @param accountType
+     * @param balance
      */
-    public void addAccount(String accountNo, String bankName, String accountHolderName, double initialBalance) {
-        Account account = new Account(accountNo, bankName, accountHolderName, initialBalance);
-        accountsHolder.addAccount(account);
-    }
 
     /***
      * Get access to the AccountDAO concrete implementation.

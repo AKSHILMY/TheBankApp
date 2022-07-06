@@ -2,17 +2,18 @@ package com.example.thebankofpirates.code.data.impl;
 
 import android.content.Context;
 
+import com.example.thebankofpirates.code.data.TransactionDAO;
+import com.example.thebankofpirates.code.data.model.Transaction;
+import com.example.thebankofpirates.code.data.model.TransactionType;
+import com.example.thebankofpirates.code.sql.App;
+import com.example.thebankofpirates.code.sql.DatabaseHelper;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.App;
-import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.DatabaseHelper;
-import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.TransactionDAO;
-import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.ExpenseType;
-import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.Transaction;
-import lk.ac.mrt.cse.dbs.simpleexpensemanager.ui.MainActivity;
+
 
 public class PersistentMemoryTransactionDAO implements TransactionDAO {
     private final Context context;
@@ -24,8 +25,8 @@ public class PersistentMemoryTransactionDAO implements TransactionDAO {
     }
 
     @Override
-    public void logTransaction(Date date, String accountNo, ExpenseType expenseType, double amount) {
-        Transaction transaction = new Transaction(date, accountNo, expenseType, amount);
+    public void logTransaction(String accountNo, TransactionType transactionType, double amount) {
+        Transaction transaction = new Transaction(accountNo, transactionType, amount);
         dbHelper.addTransactionLog(transaction);
     }
 

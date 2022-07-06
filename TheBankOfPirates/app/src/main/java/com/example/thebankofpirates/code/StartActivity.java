@@ -11,7 +11,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.example.thebankofpirates.R;
-import com.example.thebankofpirates.code.sql.DatabaseHelper;
+
 
 public class StartActivity extends AppCompatActivity {
     ImageView img;
