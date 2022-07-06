@@ -1,0 +1,30 @@
+INSERT INTO centralized_account(Account_No,Balance,Account_Type,Special_Request_Permission) VALUES(?,?,?,?);,
+INSERT INTO customer(Name,Username,Password,Account_No,DOB,Phone_No,Email) VALUES(?,?,?,?,?,?,?);
+INSERT INTO assigned_agent(Customer_ID,Agent_ID) VALUES((SELECT Customer_ID from customer ORDER BY Customer_ID DESC LIMIT 1),?);
+
+select * from (select * from customer natural join centralized_account where customer.Account_No=centralized_account.Account_No) as x natural join assigned_agent where x.Customer_ID=assigned_agent.Customer_ID;
+
+
+UPDATE centralized_account
+SET Account_Type=?
+WHERE Account_No=?;
+
+UPDATE centralized_account
+SET Special_Request_Permission=?
+WHERE Account_No=?;
+
+UPDATE customer
+SET Password=?
+WHERE Account_No=?;
+
+UPDATE customer
+SET Email=?
+WHERE Account_No=?;
+
+UPDATE customer
+SET Phone_No=?
+WHERE Account_No=?;
+
+UPDATE assigned_agent
+SET Agent_ID=?
+WHERE Customer_ID=?;
