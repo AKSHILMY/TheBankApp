@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+
 import com.example.thebankofpirates.code.data.model.Account;
 import com.example.thebankofpirates.code.data.model.Transaction;
 import com.example.thebankofpirates.code.data.model.TransactionType;
@@ -21,39 +23,27 @@ import java.util.Map;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private final Context context;
-
     private final static String DATABASE_NAME = "190028C.db";
-
     private final static  String LOCAL_ACCOUNT = "local_account";
 
-//    private final static  String CUSTOMER_ID = "Customer_ID";
-//    private final static  String CUSTOMER_NAME = "Customer_Name";
     private final static  String ACCOUNT_NO = "Account_No";
     private final static  String ACCOUNT_TYPE = "Account_Type";
     private final static  String BALANCE = "Balance";
     private final static  String SPECIAL_REQUEST_PERMISSION = "Special_Request_Permission";
     private final static  String SPECIAL_REQUEST_STATUS = "Special_Request_Status";
-    private final static  String LAST_UPDATE_TIME = "Last_Update_Time";
 
     private final static  String TRANSACTION_ID = "Transaction_ID";
     private final static  String AGENT_ID = "Agent_ID";
     private final static  String LOCAL_TRANSACTION_RECORDS = "Local_Transaction_Records";
     private final static  String TRANSACTION_TYPE = "Transaction_Type"; // Deposit or Withdrawal
-    private final static  String DATE_TIME = "DateAndTime";
     private final static  String TRANSACTION_AMOUNT = "Amount";
-    private final static  String TRANSACTION_CHARGE = "Charges";
-
-
-
-
-
-
 
     private static SQLiteDatabase db;
-    public DatabaseHelper(Context context) {
+    public DatabaseHelper(@Nullable Context context) {
         //creates a database with version 1
         super(context,DATABASE_NAME, null,1);
         this.context = context;
+        Toast.makeText(this.context, "constructor called", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -101,6 +91,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         db.execSQL("DROP TABLE IF EXISTS " +LOCAL_ACCOUNT +";");
+        db.execSQL("DROP TABLE IF EXISTS " +LOCAL_TRANSACTION_RECORDS +";");
         onCreate(db);
     }
 

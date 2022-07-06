@@ -29,9 +29,6 @@ import static com.example.thebankofpirates.code.Constants.TRANSACTION_MANAGER;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-/**
- *
- */
 public class TransactionFragment extends Fragment implements View.OnClickListener {
     private Button submitButton;
     private EditText amount;
@@ -71,7 +68,7 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
         transactionTypeGroup = (RadioGroup) rootView.findViewById(R.id.expense_type_group);
         RadioButton expenseType = (RadioButton) rootView.findViewById(R.id.expense);
         RadioButton incomeType = (RadioButton) rootView.findViewById(R.id.income);
-//        datePicker = (DatePicker) rootView.findViewById(R.id.date_selector);
+
         return rootView;
     }
 

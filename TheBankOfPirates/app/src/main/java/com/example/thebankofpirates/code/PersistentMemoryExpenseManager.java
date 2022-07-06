@@ -13,7 +13,7 @@ public class PersistentMemoryExpenseManager extends TransactionManager{
     }
     @Override
     public void setup(){
-        TransactionDAO persistentMemoryTransactionDAO = (TransactionDAO) new PersistentMemoryTransactionDAO();
+        TransactionDAO persistentMemoryTransactionDAO =  new PersistentMemoryTransactionDAO();
         setTransactionsDAO(persistentMemoryTransactionDAO);
 
         AccountDAO persistentMemoryAccountDAO = new PersistentMemoryAccountDAO();

@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.thebankofpirates.R;
 import com.example.thebankofpirates.code.sql.ConnectionHelper;
+import com.example.thebankofpirates.code.sql.DatabaseHelper;
 import com.example.thebankofpirates.code.ui.TransactionActivity;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -39,9 +40,7 @@ public class LoginActivity extends AppCompatActivity {
 
         emailTextInputLayout=(TextInputLayout)findViewById(R.id.editText1);
         passTextInputLayout=(TextInputLayout)findViewById(R.id.editText2);
-        Toast.makeText(this, "Email and password grabbed in!", Toast.LENGTH_SHORT).show();
-//        progressDialog=new ProgressDialog(LoginActivity.this);
-
+        DatabaseHelper db = new DatabaseHelper(getApplicationContext());
     }
 
     @Override
