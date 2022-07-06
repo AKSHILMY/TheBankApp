@@ -4,6 +4,7 @@ INSERT INTO assigned_agent(Customer_ID,Agent_ID) VALUES((SELECT Customer_ID from
 
 select * from (select * from customer natural join centralized_account where customer.Account_No=centralized_account.Account_No) as x natural join assigned_agent where x.Customer_ID=assigned_agent.Customer_ID;
 
+=====================================UPDATE============================================================================================
 
 UPDATE centralized_account
 SET Account_Type=?
@@ -28,3 +29,7 @@ WHERE Account_No=?;
 UPDATE assigned_agent
 SET Agent_ID=?
 WHERE Customer_ID=?;
+
+============================DELETE=========================================================================
+DELETE FROM centralized_account WHERE Account_No=?;
+DELETE FROM assigned_agent WHERE Customer_ID=?;
