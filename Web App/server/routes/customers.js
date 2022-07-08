@@ -1,22 +1,24 @@
-const express = require('express');
+import express from "express";
 
-const {
+import {
   getCustomers,
   createCustomer,
   getCustomer,
   deleteCustomer,
   updateCustomer,
-}  =  require("../controllers/customers.js");
+  createFixedAccount,
+} from "../controllers/customers.js";
 
 const router = express.Router();
 
 router.get("/", getCustomers);
 
 router.post("/", createCustomer);
+router.post("/fixed", createFixedAccount);
 
 router.get("/:id", getCustomer);
 
-router.delete("/:id", deleteCustomer);
+router.delete("/", deleteCustomer);
 
 router.patch("/:id", updateCustomer);
 
