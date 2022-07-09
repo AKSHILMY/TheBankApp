@@ -51,6 +51,9 @@ function NavBar() {
                     <LinkContainer to="customers/addCustomer">
                       <NavDropdown.Item>Add Customers</NavDropdown.Item>
                     </LinkContainer>
+                    <LinkContainer to="customers/fixedAccounts">
+                      <NavDropdown.Item>Fixed Accounts</NavDropdown.Item>
+                    </LinkContainer>
                   </NavDropdown>
                   <NavDropdown
                     title="Agents"

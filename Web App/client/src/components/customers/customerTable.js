@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import Container from "react-bootstrap/Container";
@@ -11,14 +11,18 @@ function CustomerTable({ customers }) {
     navigate(`customerDetails/${id}`);
   };
 
+  useEffect(() => {
+    setFilteredCustomer(customers);
+  }, [customers]);
+
   const searchHandler = (text) => {
     let searched = customers.filter((customer) => {
       return (
-        customer.firstName.toLowerCase() +
-        customer.lastName.toLowerCase() +
-        customer.bank.cardNumber.toLowerCase() +
-        customer.phone.toLowerCase() +
-        customer.maidenName.toLowerCase()
+        customer.Name.toLowerCase() +
+        customer.Username.toLowerCase() +
+        customer.Account_No.toLowerCase() +
+        customer.Email.toLowerCase() +
+        customer.Account_Type.toLowerCase()
       )
         .trim()
         .includes(text.toLowerCase().trim());
@@ -32,38 +36,40 @@ function CustomerTable({ customers }) {
   };
 
   return (
-    <Container>
-      <Search search={searchHandler} />
+    <>
       <Container>
-        <Table responsive hover>
-          <thead>
-            <tr>
-              <th>Account Number</th>
-              <th>Full Name</th>
-              <th>Phone</th>
-              {/* <th>Agent</th> */}
-            </tr>
-          </thead>
-          <tbody>
-            {customers.map((customer) => {
-              return (
-                <tr
-                  onClick={() => {
-                    rowClickHAndler(customer.Customer_ID);
-                  }}
-                  key={customer.Customer_ID}
-                >
-                  <td>{customer.Account_No}</td>
-                  <td>{customer.Name}</td>
-                  <td>{customer.Phone_No}</td>
-                  {/* <td>{customer.maidenName}</td> */}
-                </tr>
-              );
-            })}
-          </tbody>
-        </Table>
+        <Search search={searchHandler} />
+        <Container>
+          <Table responsive hover>
+            <thead>
+              <tr>
+                <th>Account Number</th>
+                <th>Name</th>
+                <th>Phone Number</th>
+                <th>Agent ID</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredCustomer.map((customer) => {
+                return (
+                  <tr
+                    onClick={() => {
+                      rowClickHAndler(customer.Customer_ID);
+                    }}
+                    key={customer.Customer_ID}
+                  >
+                    <td>{customer.Account_No}</td>
+                    <td>{customer.Name}</td>
+                    <td>{customer.Phone_No}</td>
+                    <td>{customer.Agent_ID}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        </Container>
       </Container>
-    </Container>
+    </>
   );
 }
 

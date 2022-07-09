@@ -1,13 +1,13 @@
+import express from "express";
+import cors from "cors";
+import bodyParser from "body-parser";
 import customerRoutes from "./routes/customers.js";
-
-const express = require("express");
-const bodyParser = require("body-parser");
-
 
 const app = express();
 const PORT = 5000;
 
 app.use(bodyParser.json());
+app.use(cors());
 
 app.use("/customers", customerRoutes);
 app.get("/", (req, res) => res.send("Welcome to the Customers API!"));
