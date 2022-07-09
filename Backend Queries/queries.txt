@@ -1,7 +1,9 @@
 INSERT INTO centralized_account(Account_No,Balance,Account_Type,Special_Request_Permission) VALUES(?,?,?,?);,
-INSERT INTO customer(Name,Username,Password,Account_No,DOB,Phone_No,Email) VALUES(?,?,?,?,?,?,?);
+INSERT INTO customer(Name,Username,Password,Account_No,DOB,Phone_No,Email,Gender) VALUES(?,?,?,?,?,?,?,?);
 INSERT INTO assigned_agent(Customer_ID,Agent_ID) VALUES((SELECT Customer_ID from customer ORDER BY Customer_ID DESC LIMIT 1),?);
 INSERT INTO fixed_deposit(Account_No,Customer_ID,Amount,Period,DateofDeposit) VALUES(?,?,?,?,?,?,?);
+INSERT INTO agent(Name) VALUES(?);
+INSERT INTO assigned_agent(Customer_ID,Agent_ID) VALUES (?,?);
 
 select * from (select * from customer natural join centralized_account where customer.Account_No=centralized_account.Account_No) as x natural join assigned_agent where x.Customer_ID=assigned_agent.Customer_ID;
 select Account_No,Name,Phone_No,x.Customer_ID,Agent_ID from (select fixed_deposit.Account_No,Name,Phone_No,customer.Customer_ID from customer inner join fixed_deposit on customer.Customer_ID=fixed_deposit.Customer_ID) as x inner join assigned_agent on x.Customer_ID=assigned_agent.Customer_ID;
