@@ -25,8 +25,15 @@ DROP TABLE IF EXISTS `agent`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `agent` (
-  `Agent_ID` char(10) NOT NULL,
+  `Agent_ID` int NOT NULL AUTO_INCREMENT,
   `Name` varchar(10) DEFAULT NULL,
+  `NIC` varchar(20) DEFAULT NULL,
+  `DOB` varchar(45) DEFAULT NULL,
+  `Phone_NO` char(10) DEFAULT NULL,
+  `Email` varchar(45) DEFAULT NULL,
+  `Username` varchar(20) DEFAULT NULL,
+  `Password` varchar(20) DEFAULT NULL,
+  `Gender` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`Agent_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -37,8 +44,37 @@ CREATE TABLE `agent` (
 
 LOCK TABLES `agent` WRITE;
 /*!40000 ALTER TABLE `agent` DISABLE KEYS */;
-INSERT INTO `agent` VALUES ('00001','S.Raman'),('00002','T.Laxman'),('00003','T.Barathan'),('00004','S.Kugan'),('00005','M.Ravanan'),('00006','S.Hanuman'),('00007','K.Kathir'),('00008','S.Seetha'),('00009','T.vaali'),('00010','N.Kumar');
+INSERT INTO `agent` VALUES (1,'S.Raman','991703462V','1999.06.18','0771233218','rama@gmail.com','raman','Rama@1234','Male'),(2,'T.Laxman','893642820V','1989.12.29','0775617848','laxman@gmail.com','laxi','Laxiii@123','Male'),(3,'T.Barathan','913642820V','1991.12.29','0773617848','barath@gmail.com','barath','Barath@123','Male'),(4,'S.Kugan','921642820V','1992.06.12','0763617348','kugan@gmail.com','kugan','Kugaaa@#3e','Male'),(5,'M.Ravanan','931642820V','1993.06.12','0763614351','ravan@gmail.com','ravan','Ravan$f@3','Male'),(6,'S.Hanuman','931703571V','1993.06.18','0751617321','hanukutty@gmail.com','hanuman','Hanumi##12','Male'),(7,'K.Kathir','931203571V','1993.04.29','0763617311','kathir@gmail.com','kaththi','Kaththi@1919','Male'),(8,'S.Seetha','887103571V','1988.07.28','0763617322','seethu@gmail.com','seetha','Azhagi@$#11','Female'),(9,'T.vaali','892203571V','1989.08.07','0763617324','vaali@gmail.com','vaalii','Wakkali@123','Male'),(10,'N.Kumar','882203571V','1988.08.07','0763617337','kumaru@gmail.com','kumaresan','Kumaru@#99','Male');
 /*!40000 ALTER TABLE `agent` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `assigned_agent`
+--
+
+DROP TABLE IF EXISTS `assigned_agent`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `assigned_agent` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `Customer_ID` int DEFAULT NULL,
+  `Agent_ID` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `agent_idx` (`Agent_ID`),
+  KEY `customer` (`Customer_ID`),
+  CONSTRAINT `agent` FOREIGN KEY (`Agent_ID`) REFERENCES `agent` (`Agent_ID`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `customer` FOREIGN KEY (`Customer_ID`) REFERENCES `customer` (`Customer_ID`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `assigned_agent`
+--
+
+LOCK TABLES `assigned_agent` WRITE;
+/*!40000 ALTER TABLE `assigned_agent` DISABLE KEYS */;
+INSERT INTO `assigned_agent` VALUES (1,1,1),(2,2,2),(3,3,3),(4,4,4),(5,5,5),(6,6,6),(7,7,6),(8,8,7);
+/*!40000 ALTER TABLE `assigned_agent` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -78,7 +114,7 @@ DROP TABLE IF EXISTS `customer`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `customer` (
-  `Customer_ID` char(10) NOT NULL,
+  `Customer_ID` int NOT NULL AUTO_INCREMENT,
   `Name` varchar(100) DEFAULT NULL,
   `Username` varchar(20) DEFAULT NULL,
   `Password` varchar(20) DEFAULT NULL,
@@ -86,6 +122,7 @@ CREATE TABLE `customer` (
   `DOB` varchar(45) DEFAULT NULL,
   `Phone_No` char(10) DEFAULT NULL,
   `Email` varchar(45) DEFAULT NULL,
+  `Gender` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`Customer_ID`),
   KEY `customer_ibfk_1_idx` (`Account_No`),
   CONSTRAINT `ACC_NUM` FOREIGN KEY (`Account_No`) REFERENCES `centralized_account` (`Account_No`) ON DELETE SET NULL ON UPDATE CASCADE
@@ -98,7 +135,7 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` VALUES ('10000','T.Sasikumar','sasi','Sasi@123','222436','1998.08.16','0751234569','sasi@gmail.com'),('10001','S.Arun','arun','Ar@mmm','222438','1996.04.16','0778908762','arun@gmail.com'),('10002','M.Kavin','kaviya','Kavikavi#12','222428','2015.06.10','0764569823','kavi@gmail.com'),('10003','M.Manoj','manoj','Manoj@1212','222430','2005.04.30','0748907654','mano@gmail.com'),('10004','T.Sudhakar','sudha','Susudha@123','222434','1960.03.30','0721899875','sudha@gmail.com'),('10005','S.Nivetha','nivi','Niviarun@123','222432','1986.04.30','0768766785','nivi@gmail.com'),('10006','K.Srija','srija','srisri@1212','222432','1989.12.02','0778908900','srija@gmail.com'),('10007','S.Anirudh','ani','Anirudh@123','222440','1987.04.08','0771232345','ani@gmail.com');
+INSERT INTO `customer` VALUES (1,'T.Sasikumar','sasi','Sasi@123','222436','1998.08.16','0751234569','sasi@gmail.com','Male'),(2,'S.Arun','arun','Ar@mmm','222438','1996.04.16','0778908762','arun@gmail.com','Male'),(3,'M.Kavin','kaviya','Kavikavi#12','222428','2015.06.10','0764569823','kavi@gmail.com','Male'),(4,'M.Manoj','manoj','Manoj@1212','222430','2005.04.30','0748907654','mano@gmail.com','Male'),(5,'T.Sudhakar','sudha','Susudha@123','222434','1960.03.30','0721899875','sudha@gmail.com','Male'),(6,'S.Nivetha','nivi','Niviarun@123','222432','1986.04.30','0768766785','nivi@gmail.com','Female'),(7,'K.Srija','srija','srisri@1212','222432','1989.12.02','0778908900','srija@gmail.com','Female'),(8,'S.Anirudh','ani','Anirudh@123','222440','1987.04.08','0771232345','ani@gmail.com','Male');
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -135,14 +172,13 @@ DROP TABLE IF EXISTS `fixed_deposit`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `fixed_deposit` (
   `Account_No` int NOT NULL,
-  `Customer_ID` char(10) DEFAULT NULL,
-  `Amount` decimal(8,2) DEFAULT NULL,
+  `Customer_ID` int DEFAULT NULL,
+  `Amount` decimal(10,2) DEFAULT NULL,
   `Period` decimal(8,2) DEFAULT NULL,
   `DateofDeposit` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`Account_No`),
   KEY `period_idx` (`Period`),
   KEY `fixed_deposit_ibfk_1` (`Customer_ID`),
-  CONSTRAINT `fixed_deposit_ibfk_1` FOREIGN KEY (`Customer_ID`) REFERENCES `customer` (`Customer_ID`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `period` FOREIGN KEY (`Period`) REFERENCES `fd_interest` (`Period`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -153,7 +189,7 @@ CREATE TABLE `fixed_deposit` (
 
 LOCK TABLES `fixed_deposit` WRITE;
 /*!40000 ALTER TABLE `fixed_deposit` DISABLE KEYS */;
-INSERT INTO `fixed_deposit` VALUES (111123,'10005',10000.00,0.50,'2022.02.30'),(111125,'10006',20000.00,1.00,'2022.03.06'),(111127,'10007',30000.00,3.00,'2022.01.20');
+INSERT INTO `fixed_deposit` VALUES (111123,6,10000.00,0.50,'2022.02.30'),(111125,7,20000.00,1.00,'2022.03.06'),(111127,8,30000.00,3.00,'2022.01.20');
 /*!40000 ALTER TABLE `fixed_deposit` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -189,13 +225,12 @@ DROP TABLE IF EXISTS `local_account`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `local_account` (
-  `Agent_ID` char(10) NOT NULL,
+  `Agent_ID` int NOT NULL AUTO_INCREMENT,
   `Account_No` char(10) NOT NULL,
   `Balance` decimal(8,2) DEFAULT NULL,
   `Last_Update_Time` date DEFAULT NULL,
   PRIMARY KEY (`Agent_ID`,`Account_No`),
   KEY `local_account_ibfk_2` (`Account_No`),
-  CONSTRAINT `local_account_ibfk_1` FOREIGN KEY (`Agent_ID`) REFERENCES `agent` (`Agent_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `local_account_ibfk_2` FOREIGN KEY (`Account_No`) REFERENCES `centralized_account` (`Account_No`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -252,4 +287,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-07-04 21:17:51
+-- Dump completed on 2022-07-09 11:58:52

@@ -1,34 +1,104 @@
 import "./App.css";
-import React, { useState,useEffect} from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import users from "./users.json";
+import api from "./api/customers";
 import CustomerTable from "./components/customers/customerTable";
 import AddCustomer from "./components/customers/addCustomer";
+import FixedAccouts from "./components/customers/fixedAccouts";
+import AddFixedAccount from "./components/customers/addFixedAccout";
 import CustomerDetails from "./components/customers/customerDetails";
 import NavBar from "./components/header/navBar";
 import Footer from "./components/footer/footer";
 import Dashboard from "./components/dashboard/dashboard";
-import axios from "axios";
 
 function App() {
   const [customers, setCustomers] = useState([]);
-  useEffect(()=>{
-    axios.get('/customers')
-  .then(result => {
-    console.log(result.data);
-    setCustomers(result.data.data);
-  })
+  const [fixed, setFixed] = useState([]);
+  const [fixedDetails, setFixedDetails] = useState([]);
 
-  },[])
-  
+  const retrieveCustomers = async () => {
+    const response = await api.get("/customers");
+    return response.data;
+  };
 
+  const updateCustomer = async (customer) => {
+    const response = await api.patch(
+      `/customers/${customer.Customer_ID}`,
+      customer
+    );
+    return response.data;
+  };
+
+  const createCustomer = async (customer) => {
+    const response = await api.post("/customers", customer);
+    return response.data;
+  };
+  const createFixedCustomer = async (customer) => {
+    const response = await api.post("/customers/fixed", customer);
+    return response.data;
+  };
+
+  const deleteCustomer = async (Account_No, Customer_ID) => {
+    const response = await api.delete("/customers", {
+      data: {
+        Account_No: Account_No,
+        Customer_ID: Customer_ID,
+      },
+    });
+    return response.data;
+  };
+
+  useEffect(() => {
+    const getAllCustomers = async () => {
+      const allcustomers = await retrieveCustomers();
+      if (allcustomers.customers) {
+        setCustomers(allcustomers.customers);
+      }
+      if (allcustomers.fixed) {
+        let list = [];
+        allcustomers.fixed.map((f) => {
+          list.push(f.Customer_ID);
+        });
+        setFixed(list);
+      }
+      if (allcustomers.fixedDetails) {
+        setFixedDetails(allcustomers.fixedDetails);
+      }
+    };
+    getAllCustomers();
+  }, []);
 
   function addCustomerHandler(customer) {
-    console.log(customer);
+    const AddCustomer = async () => {
+      const addcustomer = await createCustomer(customer);
+      console.log(addcustomer);
+    };
+    AddCustomer();
+  }
+
+  function addFixedAccountHandler(customer) {
+    const AddFixedCustomer = async () => {
+      const addfixedcustomer = await createFixedCustomer(customer);
+      console.log(addfixedcustomer);
+    };
+    AddFixedCustomer();
   }
 
   function updateCustomerHandler(customer) {
     console.log(customer);
+    const UpdateCustomer = async () => {
+      const customerUpdate = await updateCustomer(customer);
+      console.log(customerUpdate);
+    };
+    UpdateCustomer();
+  }
+
+  function deleteCustomerHandler(Account_No, Customer_ID) {
+    const DeleteCustomer = async () => {
+      const customerDelete = await deleteCustomer(Account_No, Customer_ID);
+      console.log(customerDelete);
+    };
+    DeleteCustomer();
   }
 
   return (
@@ -41,15 +111,35 @@ function App() {
             element={<AddCustomer addHandler={addCustomerHandler} />}
           />
           <Route
+            path="addFixedAccount/:id"
+            element={
+              <AddFixedAccount
+                addHandler={addFixedAccountHandler}
+              ></AddFixedAccount>
+            }
+          />
+          <Route
+            path="fixedAccounts"
+            element={<FixedAccouts fixedAccoutDetails={fixedDetails} />}
+          />
+          <Route
             path="customerDetails/:id"
             element={
               <CustomerDetails
                 customers={customers}
+                fixed={fixed}
                 updateCustomer={updateCustomerHandler}
-              />
+                deleteCustomer={deleteCustomerHandler}
+                fixedDetails={fixedDetails}
+              >
+                {" "}
+              </CustomerDetails>
             }
+          ></Route>
+          <Route
+            path=""
+            element={<CustomerTable customers={customers}></CustomerTable>}
           />
-          <Route path="" element={<CustomerTable customers={customers} />} />
         </Route>
         <Route path="/" element={<Dashboard count={customers.length} />} />
         <Route
@@ -57,7 +147,7 @@ function App() {
           element={<h3 className="text-center">Not found 404</h3>}
         />
       </Routes>
-      <Footer />
+      {/* <Footer /> */}
     </Router>
   );
 }

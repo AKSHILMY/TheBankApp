@@ -1,45 +1,117 @@
-const uuid = require('uuid');
+import { v4 as uuid } from "uuid";
+import { database } from "../database/db.js";
 
-let customers = [];
-
-const config = require("../knexfile.js");
-const db = require("knex")(config.development);
-
-const getCustomers = (req, res) => {
-  db.raw('select * from customers')
-  .then(result => {
-    res.send(result);
-  })
-  .catch(err => {
-    console.error(err);
-    res.status(500).send(err);
-  })
-  
+export const getCustomers = (req, res) => {
+  let customers;
+  database("customers", [])
+    .then(function (result) {
+      customers = result;
+      return database("getFixedID", []);
+    })
+    .then(function (result1) {
+      customers = { customers: customers, fixed: result1 };
+      return database("getFixedDetails", []);
+    })
+    .then(function (result2) {
+      const All = { ...customers, fixedDetails: result2 };
+      res.send(All);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
- const createCustomer = (req, res) => {
-   customers.push({ ...req.body, id: uuid() });
-   res.send("Customer created");
- };
-
-const getCustomer = (req, res) => {
-  const customer = customers.find((u) => {
-    return u.id == req.params.id;
-  });
-  res.send(customer);
+export const createCustomer = (req, res) => {
+  database("addCentralizedAccount", [
+    req.body.Account_No,
+    req.body.amount,
+    req.body.account_type,
+    req.body.special_request,
+  ])
+    .then(function () {
+      database("addCustomer", [
+        req.body.Name,
+        req.body.Username,
+        req.body.Password,
+        req.body.Account_No,
+        req.body.DOB,
+        req.body.Phone_No,
+        req.body.Email,
+      ]);
+    })
+    .then(function (result) {
+      database("addAssignedAgent", ["10"]);
+      res.send("Customer is created");
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send("Customer is not created");
+    });
 };
 
-const deleteCustomer = (req, res) => {
-  customers = customers.filter((customer) => customer.id !== req.params.id);
-  res.send("Customer Deleted");
+export const createFixedAccount = (req, res) => {
+  database("createFixedAccount", [
+    req.body.Account_No,
+    req.body.Customer_ID,
+    parseFloat(req.body.Amount),
+    req.body.Period,
+    req.body.DateofDeposit,
+  ])
+    .then(function (result) {
+      res.send(`${req.body.Customer_ID} fixed updated`);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send("Fixed Customer is not created");
+    });
+  console.log(req.body);
 };
 
-const updateCustomer = (req, res) => {
-  const customer = customers.find((customer) => customer.id === req.params.id);
-  if (req.body.firstName) customer.firstName = req.body.firstName;
-  if (req.body.LastName) customer.lastName = req.body.lastName;
-  if (req.body.age) customer.age = req.body.age;
-  res.send(customer);
+export const getCustomer = (req, res) => {
+  database("getCustomer", [req.params.id])
+    .then(function (result) {
+      res.send(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
-module.exports =  {getCustomers,createCustomer, getCustomer,deleteCustomer,updateCustomer}
+export const deleteCustomer = (req, res) => {
+  database("deleteCustomer1", [req.body.Account_No])
+    .then(function (result) {
+      database("deleteCustomer2", [req.body.Customer_ID]);
+      res.send(`${req.body.Customer_ID} Deleted`);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const updateCustomer = (req, res) => {
+  database("updateCustomer1", [req.body.Account_Type, req.body.Account_No])
+    .then(function () {
+      database("updateCustomer2", [
+        req.body.Special_Request_Permission,
+        req.body.Account_No,
+      ]);
+    })
+    .then(function () {
+      database("updateCustomer3", [req.body.Password, req.body.Account_No]);
+    })
+    .then(function () {
+      database("updateCustomer4", [req.body.Email, req.body.Account_No]);
+    })
+    .then(function () {
+      database("updateCustomer5", [req.body.Phone_No, req.body.Account_No]);
+    })
+    .then(function () {
+      database("updateCustomer6", [req.body.Agent_ID, req.body.Customer_ID]);
+      res.send(`${req.body.Customer_ID} is updated`);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  // res.send(customer);
+};
