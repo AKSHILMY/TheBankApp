@@ -10,14 +10,23 @@ import CustomerDetails from "./components/customers/customerDetails";
 import NavBar from "./components/header/navBar";
 import Footer from "./components/footer/footer";
 import Dashboard from "./components/dashboard/dashboard";
+import AgentTable from "./components/agents/AgentTable";
+import AgentDetails from "./components/agents/AgentDetails";
+import AddAgent from "./components/agents/AddAgent";
 
 function App() {
   const [customers, setCustomers] = useState([]);
+  const [agents, setAgents] = useState([]);
   const [fixed, setFixed] = useState([]);
   const [fixedDetails, setFixedDetails] = useState([]);
 
   const retrieveCustomers = async () => {
     const response = await api.get("/customers");
+    return response.data;
+  };
+
+  const retrieveAgents = async () => {
+    const response = await api.get("/agents");
     return response.data;
   };
 
@@ -65,7 +74,16 @@ function App() {
         setFixedDetails(allcustomers.fixedDetails);
       }
     };
+
+    const getAllAgents = async () => {
+      const allagents = await retrieveAgents();
+      if (allagents) {
+        setAgents(allagents);
+      }
+      // console.log(allagents);
+    };
     getAllCustomers();
+    getAllAgents();
   }, []);
 
   function addCustomerHandler(customer) {
@@ -74,6 +92,10 @@ function App() {
       console.log(addcustomer);
     };
     AddCustomer();
+  }
+
+  function addAgentHandler(agent) {
+    console.log(agent);
   }
 
   function addFixedAccountHandler(customer) {
@@ -140,6 +162,15 @@ function App() {
             path=""
             element={<CustomerTable customers={customers}></CustomerTable>}
           />
+        </Route>
+
+        <Route path="agents">
+          <Route
+            path="addAgent"
+            element={<AddAgent addHandler={addAgentHandler} />}
+          />
+          <Route path="agentDetails/:id" element={<AgentDetails />} />
+          <Route path="" element={<AgentTable agents={agents} />} />
         </Route>
         <Route path="/" element={<Dashboard count={customers.length} />} />
         <Route

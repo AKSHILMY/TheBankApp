@@ -36,7 +36,6 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
     private Spinner accountSelector;
     private RadioGroup transactionTypeGroup;
     private TransactionManager currentTransactionManager;
-    private DatabaseHelper dbHelper;
 
 
     public static TransactionFragment newInstance(TransactionManager transactionManager) {
@@ -58,7 +57,6 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
 
         amount = (EditText) rootView.findViewById(R.id.amount);
         accountSelector = (Spinner) rootView.findViewById(R.id.account_selector);
-        dbHelper = new DatabaseHelper(getContext());
         currentTransactionManager = (TransactionManager) getArguments().get(TRANSACTION_MANAGER);
         ArrayAdapter<String> adapter =
                 null;

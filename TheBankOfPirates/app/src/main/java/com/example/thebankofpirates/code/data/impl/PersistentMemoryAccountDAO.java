@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import java.util.List;
 
-import com.example.thebankofpirates.code.sql.App;
 import com.example.thebankofpirates.code.sql.DatabaseHelper;
 import com.example.thebankofpirates.code.data.AccountDAO;
 import com.example.thebankofpirates.code.data.exception.InvalidAccountException;
@@ -19,8 +18,8 @@ public class PersistentMemoryAccountDAO implements AccountDAO {
     private final Context context;
     private final DatabaseHelper dbHelper ;
 
-    public PersistentMemoryAccountDAO() {
-        context = App.getContext();
+    public PersistentMemoryAccountDAO(Context context) {
+        this.context = context;
         dbHelper = new DatabaseHelper(context);
 
     }

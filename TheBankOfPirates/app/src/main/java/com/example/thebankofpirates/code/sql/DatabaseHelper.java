@@ -100,6 +100,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public Map<String,Account> getAccounts() {
+         Log.d("getAcc","WORKS");
         String selectQuery = "SELECT  * FROM " + LOCAL_ACCOUNT;
         db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -115,6 +116,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             cursor.close();
         }
         db.close();
+//        Account account1 = new Account("1234567890",23.34,"Adult","YES");
+//        accounts.put(account1.getAccountNo(),account1);
         return accounts;
 
     }

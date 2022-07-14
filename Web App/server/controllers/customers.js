@@ -37,11 +37,13 @@ export const createCustomer = (req, res) => {
         req.body.DOB,
         req.body.Phone_No,
         req.body.Email,
+        req.body.Gender,
       ]);
     })
     .then(function (result) {
-      database("addAssignedAgent", ["10"]);
+      database("addAssignedAgent", req.body.Agent_ID);
       res.send("Customer is created");
+      console.log(req.body);
     })
     .catch((err) => {
       console.log(err);

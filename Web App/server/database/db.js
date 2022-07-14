@@ -10,7 +10,7 @@ var queries = {
   addCentralizedAccount:
     "INSERT INTO centralized_account(Account_No,Balance,Account_Type,Special_Request_Permission) VALUES(?,?,?,?);",
   addCustomer:
-    "INSERT INTO customer(Name,Username,Password,Account_No,DOB,Phone_No,Email) VALUES(?,?,?,?,?,?,?);",
+    "INSERT INTO customer(Name,Username,Password,Account_No,DOB,Phone_No,Email,Gender) VALUES(?,?,?,?,?,?,?,?);",
   addAssignedAgent:
     "INSERT INTO assigned_agent(Customer_ID,Agent_ID) VALUES((SELECT Customer_ID from customer ORDER BY Customer_ID DESC LIMIT 1),?);",
   getCustomerID:
@@ -31,6 +31,8 @@ var queries = {
     "select Account_No,Amount,Period,DateofDeposit,x.Customer_ID,x.Name from (select fixed_deposit.Account_No,Amount,Name,Phone_No,Period,DateofDeposit,customer.Customer_ID from customer inner join fixed_deposit on customer.Customer_ID=fixed_deposit.Customer_ID) as x inner join assigned_agent on x.Customer_ID=assigned_agent.Customer_ID;",
   createFixedAccount:
     "INSERT INTO fixed_deposit(Account_No,Customer_ID,Amount,Period,DateofDeposit) VALUES(?,?,?,?,?);",
+  agents:
+    "select   Agent_ID,y.Name as Agent_Name,NIC,DOB,Phone_No,Username,Password,Email,z.Name from (select x.Agent_ID,Name,NIC,DOB,Phone_No,Username,Password,Email,Customer_ID from assigned_agent right outer join (select * from agent) as x on x.Agent_ID=assigned_agent.Agent_ID) as y left outer join (select Customer_ID,Name from customer) as z on  y.Customer_ID=z.Customer_ID;",
 };
 
 export function database(queryName, queryParams) {

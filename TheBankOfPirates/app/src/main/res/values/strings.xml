@@ -6,7 +6,7 @@
     <string name="amount_text">Amount</string>
     <string name="date_text">Date</string>
     <string name="submit">Submit</string>
-    <string name="withdrawal_text">Withdrawal</string>
+    <string name="withdrawal_text">Withdraw</string>
     <string name="deposit_text">Deposit</string>
     <string name="transaction_type_text">Type</string>
     <string name="bank_text">Bank</string>
