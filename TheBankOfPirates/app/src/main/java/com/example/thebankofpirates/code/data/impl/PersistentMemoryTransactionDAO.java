@@ -5,22 +5,17 @@ import android.content.Context;
 import com.example.thebankofpirates.code.data.TransactionDAO;
 import com.example.thebankofpirates.code.data.model.Transaction;
 import com.example.thebankofpirates.code.data.model.TransactionType;
-import com.example.thebankofpirates.code.sql.App;
 import com.example.thebankofpirates.code.sql.DatabaseHelper;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
-
 
 
 public class PersistentMemoryTransactionDAO implements TransactionDAO {
     private final Context context;
     private final DatabaseHelper dbHelper ;
 
-    public PersistentMemoryTransactionDAO() {
-        context = App.getContext();
+    public PersistentMemoryTransactionDAO(Context context) {
+        this.context = context;
         dbHelper = new DatabaseHelper(context);
     }
 

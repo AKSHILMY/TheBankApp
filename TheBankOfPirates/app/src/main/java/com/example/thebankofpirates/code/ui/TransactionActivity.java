@@ -1,6 +1,7 @@
 
 package com.example.thebankofpirates.code.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,12 +11,13 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import com.example.thebankofpirates.R;
+import com.example.thebankofpirates.code.PersistentMemoryTransactionManager;
 import com.example.thebankofpirates.code.TransactionManager;
 import com.google.android.material.tabs.TabLayout;
 
 
 public class TransactionActivity extends AppCompatActivity {
-
+    Context context;
     private TransactionManager transactionManager;
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -24,7 +26,7 @@ public class TransactionActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        context = this.getBaseContext();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction);
 
@@ -40,6 +42,8 @@ public class TransactionActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+        transactionManager = new PersistentMemoryTransactionManager(context);
 
 
     }
