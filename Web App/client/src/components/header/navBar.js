@@ -59,11 +59,11 @@ function NavBar() {
                     title="Agents"
                     id={`offcanvasNavbarDropdown-expand-${expand}`}
                   >
-                    <LinkContainer to="customers">
+                    <LinkContainer to="agents">
                       <NavDropdown.Item>All Agents</NavDropdown.Item>
                     </LinkContainer>
                     <NavDropdown.Divider />
-                    <LinkContainer to="customers/addCustomer">
+                    <LinkContainer to="agents/addAgent">
                       <NavDropdown.Item>Add Agent</NavDropdown.Item>
                     </LinkContainer>
                   </NavDropdown>

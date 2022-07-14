@@ -20,6 +20,7 @@ export default class addCustomer extends Component {
         Email: "",
         account_type: "",
         special_request: "",
+        Gender: "",
         amount: "",
         Agent_ID: "",
       },
@@ -59,8 +60,8 @@ export default class addCustomer extends Component {
           validated={this.state.validated}
           onSubmit={this.handleSubmit}
         >
-          <Row className="mb-3">
-            <Form.Group as={Col} md="4" controlId="validationCustom01">
+          <Row className="mb-4">
+            <Form.Group as={Col} md="3" controlId="validationCustom01">
               <Form.Label>Name</Form.Label>
               <Form.Control
                 required
@@ -73,7 +74,7 @@ export default class addCustomer extends Component {
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom02">
+            <Form.Group as={Col} md="3" controlId="validationCustom02">
               <Form.Label>Username</Form.Label>
               <Form.Control
                 required
@@ -86,7 +87,7 @@ export default class addCustomer extends Component {
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustomUsername">
+            <Form.Group as={Col} md="3" controlId="validationCustomUsername">
               <Form.Label>Password</Form.Label>
               <Form.Control
                 required
@@ -99,6 +100,25 @@ export default class addCustomer extends Component {
               />
               <Form.Control.Feedback type="invalid">
                 Please input a password
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="3" controlId="validationCustomUsername">
+              <Form.Label>Gender</Form.Label>
+              <Form.Select
+                required
+                defaultValue={this.state.customer.Gender}
+                onChange={(e) => {
+                  this.handleChange({ Gender: e.target.value });
+                }}
+              >
+                <option disabled value="">
+                  Choose..
+                </option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </Form.Select>
+              <Form.Control.Feedback type="invalid">
+                Please input the gender.
               </Form.Control.Feedback>
             </Form.Group>
           </Row>
@@ -115,7 +135,7 @@ export default class addCustomer extends Component {
                 }}
               ></Form.Control>
               <Form.Control.Feedback type="invalid">
-                Please input the gender.
+                Please input the Account number.
               </Form.Control.Feedback>
             </Form.Group>
 
