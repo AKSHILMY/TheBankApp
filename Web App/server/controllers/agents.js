@@ -19,3 +19,25 @@ export const deleteAgent = (req, res) => {
       console.log(err);
     });
 };
+
+export const createAgent = (req, res) => {
+  // database("addAgent", [
+  //   req.body.Name,
+  //   req.body.Username,
+  //   req.body.Password,
+  //   req.body.DOB,
+  //   req.body.Phone_NO,
+  //   req.body.Email,
+  //   req.body.NIC,
+  // ])
+  //   .then(function (result) {
+  //     res.send("Agent is created");
+  //     console.log(req.body);
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //     res.send("Customer is not created");
+  //   });
+  console.log(req.body);
+  res.send("Agent is Created");
+};

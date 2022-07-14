@@ -42,6 +42,12 @@ function App() {
     const response = await api.post("/customers", customer);
     return response.data;
   };
+
+  const createAgent = async (agent) => {
+    const response = await api.post("/agents", agent);
+    return response.data;
+  };
+
   const createFixedCustomer = async (customer) => {
     const response = await api.post("/customers/fixed", customer);
     return response.data;
@@ -102,7 +108,11 @@ function App() {
   }
 
   function addAgentHandler(agent) {
-    console.log(agent);
+    const AddAgent = async () => {
+      const addagent = await createAgent(agent);
+      console.log(addagent);
+    };
+    AddAgent();
   }
 
   function addFixedAccountHandler(customer) {
