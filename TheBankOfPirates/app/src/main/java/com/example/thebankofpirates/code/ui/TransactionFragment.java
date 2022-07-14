@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import com.example.thebankofpirates.code.TransactionManager;
 import com.example.thebankofpirates.code.data.exception.InvalidAccountException;
 import com.example.thebankofpirates.code.data.model.TransactionType;
+import com.example.thebankofpirates.code.sql.DatabaseHelper;
 
 import static com.example.thebankofpirates.code.Constants.TRANSACTION_MANAGER;
 
@@ -35,6 +36,7 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
     private Spinner accountSelector;
     private RadioGroup transactionTypeGroup;
     private TransactionManager currentTransactionManager;
+    private DatabaseHelper dbHelper;
 
 
     public static TransactionFragment newInstance(TransactionManager transactionManager) {
@@ -56,6 +58,7 @@ public class TransactionFragment extends Fragment implements View.OnClickListene
 
         amount = (EditText) rootView.findViewById(R.id.amount);
         accountSelector = (Spinner) rootView.findViewById(R.id.account_selector);
+        dbHelper = new DatabaseHelper(getContext());
         currentTransactionManager = (TransactionManager) getArguments().get(TRANSACTION_MANAGER);
         ArrayAdapter<String> adapter =
                 null;
