@@ -33,6 +33,7 @@ var queries = {
     "INSERT INTO fixed_deposit(Account_No,Customer_ID,Amount,Period,DateofDeposit) VALUES(?,?,?,?,?);",
   agents:
     "select   Agent_ID,y.Name as Agent_Name,NIC,DOB,Phone_No,Username,Password,Email,z.Name from (select x.Agent_ID,Name,NIC,DOB,Phone_No,Username,Password,Email,Customer_ID from assigned_agent right outer join (select * from agent) as x on x.Agent_ID=assigned_agent.Agent_ID) as y left outer join (select Customer_ID,Name from customer) as z on  y.Customer_ID=z.Customer_ID;",
+  deleteAgent: "DELETE FROM agent WHERE Agent_ID=?;",
 };
 
 export function database(queryName, queryParams) {

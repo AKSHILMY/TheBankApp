@@ -57,6 +57,13 @@ function App() {
     return response.data;
   };
 
+  const deleteAgent = async (Agent_ID) => {
+    const response = await api.delete("/agents", {
+      data: { Agent_ID: Agent_ID },
+    });
+    return response.data;
+  };
+
   useEffect(() => {
     const getAllCustomers = async () => {
       const allcustomers = await retrieveCustomers();
@@ -123,6 +130,14 @@ function App() {
     DeleteCustomer();
   }
 
+  function deleteAgentHandler(Agent_ID) {
+    const DeleteAgent = async () => {
+      const agentDelete = await deleteAgent(Agent_ID);
+      console.log(agentDelete);
+    };
+    DeleteAgent();
+  }
+
   return (
     <Router>
       <NavBar />
@@ -169,10 +184,22 @@ function App() {
             path="addAgent"
             element={<AddAgent addHandler={addAgentHandler} />}
           />
-          <Route path="agentDetails/:id" element={<AgentDetails />} />
+          <Route
+            path="agentDetails/:id"
+            element={
+              <AgentDetails agents={agents} deleteAgent={deleteAgentHandler} />
+            }
+          />
           <Route path="" element={<AgentTable agents={agents} />} />
         </Route>
-        <Route path="/" element={<Dashboard count={customers.length} />} />
+        <Route
+          path="/"
+          element={
+            <Dashboard
+              count={{ customers: customers.length, agents: agents.length }}
+            />
+          }
+        />
         <Route
           path="*"
           element={<h3 className="text-center">Not found 404</h3>}

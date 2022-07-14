@@ -11,12 +11,16 @@ export default function Dashboard({ count }) {
       <Row>
         <Col>
           <Link to="/customers">
-            <Cards variant="Primary" header="Customers" count={count} />
+            <Cards
+              variant="Primary"
+              header="Customers"
+              count={count.customers}
+            />
           </Link>
         </Col>
         <Col>
-          <Link to="/customers">
-            <Cards variant="Success" header="Agents" count={count} />
+          <Link to="/agents">
+            <Cards variant="Success" header="Agents" count={count.agents} />
           </Link>
         </Col>
       </Row>

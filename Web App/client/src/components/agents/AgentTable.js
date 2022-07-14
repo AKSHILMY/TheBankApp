@@ -34,14 +34,13 @@ function AgentTable({ agents }) {
   const searchHandler = (text) => {
     let searched = unique(agents).filter((agent) => {
       return (
-        (agents ? agent.Agent_Name.toLowerCase() : null) +
-        (agents ? agent.Agent_ID.toString() : null) +
-        (agents ? agent.Phone_NO.toString() : null)
+        agent.Agent_Name.toLowerCase() +
+        agent.Agent_ID.toString() +
+        agent.Phone_NO.toString()
       )
         .trim()
         .includes(text.toLowerCase().trim());
     });
-    // console.log(searched);
     if (text !== "") {
       setFilteredAgents(searched);
     } else {
