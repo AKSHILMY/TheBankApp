@@ -25,10 +25,11 @@ import com.example.thebankofpirates.code.data.exception.InvalidAccountException;
 
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
+import java.util.Locale;
 
 
 /**
@@ -62,7 +63,10 @@ public abstract class TransactionManager implements Serializable {
 
         if (!amount.isEmpty()) {
             double amountVal = Double.parseDouble(amount);
-            transactionsHolder.logTransaction(accountNo, transactionType, amountVal);
+            String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+            String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+            String dateTime = currentDate+" "+currentTime;
+            transactionsHolder.logTransaction(accountNo, transactionType, amountVal,dateTime);
             accountsHolder.updateBalance(accountNo, transactionType, amountVal);
         }
     }

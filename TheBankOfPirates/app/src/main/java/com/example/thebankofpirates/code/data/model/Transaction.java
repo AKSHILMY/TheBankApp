@@ -23,11 +23,24 @@ import java.util.Date;
  */
 public class Transaction {
     private String transactionID;
+    private String dateTime;
     private String agentID;
     private String accountNo;
     private TransactionType transactionType;
     private double amount;
     private String specialRequestStatus;
+
+    public Transaction(String accountNo,
+                       TransactionType transactionType,
+                       double amount,String dateTime) {
+//        this.transactionID = transactionID;
+//        this.agentID = agentID;
+        this.accountNo = accountNo;
+        this.transactionType = transactionType;
+        this.amount = amount;
+        this.dateTime = dateTime;
+//        this.specialRequestStatus=specialRequestStatus;
+    }
 
     public String getTransactionID() {
         return transactionID;
@@ -76,15 +89,12 @@ public class Transaction {
     public void setSpecialRequestStatus(String specialRequestStatus) {
         this.specialRequestStatus = specialRequestStatus;
     }
-
-    public Transaction(String transactionID,
-                       TransactionType transactionTyp,
-                       double amount) {
-        this.transactionID = transactionID;
-        this.agentID = agentID;
-        this.accountNo = accountNo;
-        this.transactionType = transactionType;
-        this.amount = amount;
-        this.specialRequestStatus=specialRequestStatus;
+    public String getDateTime() {
+        return dateTime;
     }
+
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
+    }
+
 }

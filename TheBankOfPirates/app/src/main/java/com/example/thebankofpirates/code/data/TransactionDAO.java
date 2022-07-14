@@ -35,7 +35,7 @@ public interface TransactionDAO {
      * @param transactionType - type of the expense
      * @param amount      - amount involved
      */
-    public void logTransaction(String accountNo, TransactionType transactionType, double amount);
+    public void logTransaction(String accountNo, TransactionType transactionType, double amount,String dateTime);
 
     /***
      * Return all the transactions logged.
