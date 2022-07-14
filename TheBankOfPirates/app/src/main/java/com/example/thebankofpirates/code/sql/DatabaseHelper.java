@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -43,45 +44,48 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //creates a database with version 1
         super(context,DATABASE_NAME, null,1);
         this.context = context;
-        Toast.makeText(this.context, "constructor called", Toast.LENGTH_LONG).show();
+        db = getWritableDatabase();
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createSqliteQuery1 = "CREATE TABLE "+LOCAL_ACCOUNT+" ("+
-                ACCOUNT_NO+ " char(10) NOT NULL UNIQUE," +
-                ACCOUNT_TYPE +" varchar(10) NOT NULL,"+
-                BALANCE +" decimal(8,2) DEFAULT NULL,"+
-//                CUSTOMER_ID +" varchar(10) NOT NULL,"+
-//                CUSTOMER_NAME +" varchar(10) NOT NULL,"+
-                SPECIAL_REQUEST_PERMISSION +" varchar(3) NOT NULL,"+
+        Toast.makeText(context, "DB CREATing", Toast.LENGTH_LONG).show();
+        String createSqliteQuery1 = "CREATE TABLE IF NOT EXISTS "+LOCAL_ACCOUNT+" ("+
+                ACCOUNT_NO+ " TEXT NOT NULL UNIQUE," +
+                ACCOUNT_TYPE +" TEXT NOT NULL,"+
+                BALANCE +" NUMERIC DEFAULT NULL,"+
+                SPECIAL_REQUEST_PERMISSION +" TEXT NOT NULL,"+
                 "PRIMARY KEY ("+ACCOUNT_NO+"));";
 
         String insertAccountDummyData = "INSERT INTO "+LOCAL_ACCOUNT+
-                " VALUES (0000000001,"+"Adult"+",450000.65,0"+"),"+
-                "(0000000001,"+"Adult"+",450000.65,0"+"),"+
-                "(0000000001,"+"Adult"+",450000.65,0"+")"+";";
+                " VALUES ("+"0000000001"+","+"Adult"+",450001.65,0"+"),"+
+                "("+"0000000002"+","+"Adult"+",450002.65,0"+"),"+
+                "("+"0000000003"+","+"Adult"+",450003.65,0"+")"+";";
 
 
-        String createSqliteQuery2 = "CREATE TABLE "+ LOCAL_TRANSACTION_RECORDS +" ("+
+        String createSqliteQuery2 = "CREATE TABLE IF NOT EXISTS "+ LOCAL_TRANSACTION_RECORDS +" ("+
                 TRANSACTION_ID +" INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                AGENT_ID +" varchar(10) NOT NULL,"+
-                ACCOUNT_NO+ " char(10) NOT NULL," +
-                TRANSACTION_TYPE +" varchar(10) NOT NULL,"+
-                TRANSACTION_AMOUNT +" decimal(8,2) DEFAULT NULL,"+
+                AGENT_ID +" TEXT NOT NULL,"+
+                ACCOUNT_NO+ " TEXT NOT NULL," +
+                TRANSACTION_TYPE +" TEXT NOT NULL,"+
+                TRANSACTION_AMOUNT +" NUMERIC DEFAULT NULL,"+
 //                TRANSACTION_CHARGE +" decimal(8,2) DEFAULT NULL,"+
-                SPECIAL_REQUEST_STATUS +" varchar(3) NOT NULL,"+
-                "PRIMARY KEY ("+TRANSACTION_ID+")"+
-                ACCOUNT_NO+" int FOREIGN KEY REFERENCES "+LOCAL_ACCOUNT+"("+ACCOUNT_NO+"));";
+                SPECIAL_REQUEST_STATUS +" TEXT NOT NULL,"+
+                "FOREIGN KEY(" +ACCOUNT_NO +") REFERENCES " +LOCAL_ACCOUNT+"("+ACCOUNT_NO+"));";
 
-        String insertLogDummyData = "INSERT INTO "+LOCAL_TRANSACTION_RECORDS+
-                " VALUES (1,190028,0000000001,"+"Deposit"+","+"5000.00"+","+"YES"+");";
-
+        String insertLogDummyData2 = "INSERT INTO "+LOCAL_TRANSACTION_RECORDS+
+                " VALUES ("+1+","+"190028"+","+"0000000001"+","+"Deposit"+","+"5000.00"+","+"YES"+");";
+        String newQuery = "INSERT INTO local_account VALUES ('0000000001','Adult',450001.65,'YES'),('0000000002','Adult',450002.65,'NO'),('0000000003','Adult',450003.65,'YES')";
+        String newQuery2 = "INSERT INTO Local_Transaction_Records VALUES (1,'190028','0000000001','Deposit',5000.90,'YES'),(2,'190029','0000000002','Deposit',5010.90,'NO'),(3,'190038','0000000004','Deposit',50450.90,'YES')";
 
         db.execSQL(createSqliteQuery1);
-        db.execSQL(insertAccountDummyData);
         db.execSQL(createSqliteQuery2);
-        db.execSQL(insertLogDummyData);
+        db.execSQL(newQuery);
+        db.execSQL(newQuery2);
+        Log.d("InsertACCTag",insertLogDummyData2);
+
+//        db.execSQL(insertAccountDummyData);
+//        db.execSQL(insertLogDummyData);
         Toast.makeText(context, "DB CREATED", Toast.LENGTH_SHORT).show();
 
 
@@ -103,7 +107,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            Account account = new Account(cursor.getString(0),cursor.getDouble(1),cursor.getString(2),cursor.getString(3));
+            Account account = new Account(cursor.getString(0),cursor.getDouble(2),cursor.getString(1),cursor.getString(3));
             accounts.put(cursor.getString(0),account);
             cursor.moveToNext();
         }

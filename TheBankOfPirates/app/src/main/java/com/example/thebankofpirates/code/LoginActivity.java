@@ -40,7 +40,6 @@ public class LoginActivity extends AppCompatActivity {
 
         emailTextInputLayout=(TextInputLayout)findViewById(R.id.editText1);
         passTextInputLayout=(TextInputLayout)findViewById(R.id.editText2);
-        DatabaseHelper db = new DatabaseHelper(getApplicationContext());
     }
 
     @Override
