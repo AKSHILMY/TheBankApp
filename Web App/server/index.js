@@ -14,7 +14,7 @@ app.use(cors());
 
 app.use("/customers", customerRoutes);
 app.use("/agents", agnetsRoutes);
-app.get("/", (req, res) => res.send("Welcome to the Customers API!"));
+app.get("/", (req, res) => res.send("Welcome to the Micro Banking API!"));
 app.all("*", (req, res) =>
   res.send("You've tried reaching a route that doesn't exist.")
 );

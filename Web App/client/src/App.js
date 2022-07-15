@@ -13,6 +13,7 @@ import Dashboard from "./components/dashboard/dashboard";
 import AgentTable from "./components/agents/AgentTable";
 import AgentDetails from "./components/agents/AgentDetails";
 import AddAgent from "./components/agents/AddAgent";
+import Login from "./components/login/Login";
 
 function App() {
   const [customers, setCustomers] = useState([]);
@@ -210,6 +211,7 @@ function App() {
             />
           }
         />
+        <Route path="login" element={<Login />} />
         <Route
           path="*"
           element={<h3 className="text-center">Not found 404</h3>}

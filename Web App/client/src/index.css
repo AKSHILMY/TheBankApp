@@ -26,3 +26,9 @@ Table thead {
   top: 0px;
   margin: 0 0 0 0;
 }
+
+@media only screen and (min-width: 600px) {
+  .login-row {
+    width: 40vw;
+  }
+}
