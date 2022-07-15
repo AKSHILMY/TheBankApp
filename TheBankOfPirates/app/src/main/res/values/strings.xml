@@ -9,6 +9,7 @@
     <string name="withdrawal_text">Withdraw</string>
     <string name="deposit_text">Deposit</string>
     <string name="transaction_type_text">Type</string>
+    <string name="transaction_id">ID</string>
     <string name="bank_text">Bank</string>
     <string name="account_holder_text">Account Holder</string>
     <string name="deposit_amount">Deposit Amount</string>
@@ -18,4 +19,5 @@
     <string name="label_transaction">Transaction</string>
     <string name="label_deposit">Deposit</string>
     <string name="label_details">Details</string>
+    <string name="config_date_log_pattern">dd-MM-yyyy HH:mm:ss</string>
 </resources>

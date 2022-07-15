@@ -20,9 +20,18 @@ code {
 .title:hover {
   color: black;
 }
+.dcard:hover {
+  text-decoration: none;
+}
 
 Table thead {
   position: sticky;
   top: 0px;
   margin: 0 0 0 0;
+}
+
+@media only screen and (min-width: 600px) {
+  .login-row {
+    width: 40vw;
+  }
 }

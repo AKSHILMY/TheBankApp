@@ -20,8 +20,8 @@ public class PersistentMemoryTransactionDAO implements TransactionDAO {
     }
 
     @Override
-    public void logTransaction(String accountNo, TransactionType transactionType, double amount) {
-        Transaction transaction = new Transaction(accountNo, transactionType, amount);
+    public void logTransaction(String accountNo, TransactionType transactionType, double amount,String date) {
+        Transaction transaction = new Transaction(accountNo, transactionType, amount,date);
         dbHelper.addTransactionLog(transaction);
     }
 

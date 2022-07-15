@@ -13,6 +13,7 @@ import Dashboard from "./components/dashboard/dashboard";
 import AgentTable from "./components/agents/AgentTable";
 import AgentDetails from "./components/agents/AgentDetails";
 import AddAgent from "./components/agents/AddAgent";
+import Login from "./components/login/Login";
 
 function App() {
   const [customers, setCustomers] = useState([]);
@@ -42,6 +43,12 @@ function App() {
     const response = await api.post("/customers", customer);
     return response.data;
   };
+
+  const createAgent = async (agent) => {
+    const response = await api.post("/agents", agent);
+    return response.data;
+  };
+
   const createFixedCustomer = async (customer) => {
     const response = await api.post("/customers/fixed", customer);
     return response.data;
@@ -53,6 +60,13 @@ function App() {
         Account_No: Account_No,
         Customer_ID: Customer_ID,
       },
+    });
+    return response.data;
+  };
+
+  const deleteAgent = async (Agent_ID) => {
+    const response = await api.delete("/agents", {
+      data: { Agent_ID: Agent_ID },
     });
     return response.data;
   };
@@ -95,7 +109,11 @@ function App() {
   }
 
   function addAgentHandler(agent) {
-    console.log(agent);
+    const AddAgent = async () => {
+      const addagent = await createAgent(agent);
+      console.log(addagent);
+    };
+    AddAgent();
   }
 
   function addFixedAccountHandler(customer) {
@@ -121,6 +139,14 @@ function App() {
       console.log(customerDelete);
     };
     DeleteCustomer();
+  }
+
+  function deleteAgentHandler(Agent_ID) {
+    const DeleteAgent = async () => {
+      const agentDelete = await deleteAgent(Agent_ID);
+      console.log(agentDelete);
+    };
+    DeleteAgent();
   }
 
   return (
@@ -169,10 +195,23 @@ function App() {
             path="addAgent"
             element={<AddAgent addHandler={addAgentHandler} />}
           />
-          <Route path="agentDetails/:id" element={<AgentDetails />} />
+          <Route
+            path="agentDetails/:id"
+            element={
+              <AgentDetails agents={agents} deleteAgent={deleteAgentHandler} />
+            }
+          />
           <Route path="" element={<AgentTable agents={agents} />} />
         </Route>
-        <Route path="/" element={<Dashboard count={customers.length} />} />
+        <Route
+          path="/"
+          element={
+            <Dashboard
+              count={{ customers: customers.length, agents: agents.length }}
+            />
+          }
+        />
+        <Route path="login" element={<Login />} />
         <Route
           path="*"
           element={<h3 className="text-center">Not found 404</h3>}

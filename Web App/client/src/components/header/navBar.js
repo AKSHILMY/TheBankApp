@@ -71,7 +71,7 @@ function NavBar() {
                     title="admin"
                     id={`offcanvasNavbarDropdown-expand-${expand}`}
                   >
-                    <LinkContainer to="customers">
+                    <LinkContainer to="login">
                       <NavDropdown.Item>Log out</NavDropdown.Item>
                     </LinkContainer>
                   </NavDropdown>
