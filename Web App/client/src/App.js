@@ -94,7 +94,6 @@ function App() {
       if (allagents) {
         setAgents(allagents);
       }
-      // console.log(allagents);
     };
     getAllCustomers();
     getAllAgents();

@@ -37,7 +37,7 @@ function FixedAccouts({ fixedAccoutDetails }) {
             <th>Name</th>
             <th>Period</th>
             <th>Amount</th>
-            <th>Data of Deposit</th>
+            <th>Date of Deposit</th>
           </tr>
         </thead>
         <tbody>
@@ -48,7 +48,7 @@ function FixedAccouts({ fixedAccoutDetails }) {
                 <td>{c.Name}</td>
                 <td>{c.Period}</td>
                 <td>{c.Amount}</td>
-                <td>{c.DateofDeposit}</td>
+                <td>{c.DateofDeposit.slice(0, 10)}</td>
               </tr>
             );
           })}
