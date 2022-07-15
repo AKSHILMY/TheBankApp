@@ -6,7 +6,8 @@ INSERT INTO agent(Name) VALUES(?);
 INSERT INTO assigned_agent(Customer_ID,Agent_ID) VALUES (?,?);
 INSERT INTO agent(Name,NIC,DOB,Phone_No,Email,Username,Password,Gender) VALUES(?,?,?,?,?,?,?,?);
 
-===================================================================================================================================================================
+===========================================Select=====================================================================================================
+
 select * from (select * from customer natural join centralized_account where customer.Account_No=centralized_account.Account_No) as x natural join assigned_agent where x.Customer_ID=assigned_agent.Customer_ID;
 select Account_No,Name,Phone_No,x.Customer_ID,Agent_ID from (select fixed_deposit.Account_No,Name,Phone_No,customer.Customer_ID from customer inner join fixed_deposit on customer.Customer_ID=fixed_deposit.Customer_ID) as x inner join assigned_agent on x.Customer_ID=assigned_agent.Customer_ID;
 select Account_No,Name,Phone_No,Period,x.Customer_ID,Agent_ID from (select fixed_deposit.Account_No,Name,Phone_No,Period,customer.Customer_ID from customer inner join fixed_deposit on customer.Customer_ID=fixed_deposit.Customer_ID) as x inner join assigned_agent on x.Customer_ID=assigned_agent.Customer_ID;
@@ -17,7 +18,8 @@ select Account_No,x.Name,Amount,Period,DateofDeposit,x.Customer_ID from (select 
 select  Agent_ID,y.Name,NIC,Phone_No,z.Name from (select Agent_ID,Name,NIC,Phone_No,Customer_ID from assigned_agent natural join (select Agent_ID,Name,NIC,Phone_NO from agent) as x where x.Agent_ID=assigned_agent.Agent_ID) as y inner join (select Customer_ID,Name from customer) as z where y.Customer_ID=z.Customer_ID;
 select Agent_ID,Name,NIC,Phone_No from Agent;
 select   Agent_ID,y.Name,NIC,DOB,Phone_No,Username,Password,Email,z.Name from (select x.Agent_ID,Name,NIC,DOB,Phone_No,Username,Password,Email,Customer_ID from assigned_agent right outer join (select * from agent) as x on x.Agent_ID=assigned_agent.Agent_ID) as y left outer join (select Customer_ID,Name from customer) as z on  y.Customer_ID=z.Customer_ID;
-=====================================UPDATE===========================================================================================================================
+
+============================================UPDATE===========================================================================================================================
 
 UPDATE centralized_account
 SET Account_Type=?
@@ -80,6 +82,33 @@ END;
 ;;
 DELIMITER ;
 
+DELIMITER ;;
+CREATE PROCEDURE update_account_balances()
+BEGIN
+DECLARE cursor_Account_No VARCHAR(45) DEFAULT "";
+DECLARE cursor_Balance decimal(8,2) DEFAULT 0.0;
+DECLARE cursor_Account_Type VARCHAR(45) DEFAULT "";
+DECLARE isActive VARCHAR(15) DEFAULT "";
+DECLARE done INT DEFAULT FALSE;
+DECLARE cursor_e CURSOR FOR SELECT Account_No, Balance, Account_Type FROM centralized_account;
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+OPEN cursor_e;
+read_loop: LOOP
+  FETCH cursor_e INTO cursor_Account_No, cursor_Balance, cursor_Account_Type;
+  IF done THEN
+    LEAVE read_loop;
+  END IF;
+  select IS_Active into isActive from customer where Account_No=cursor_Account_No limit 1;
+  update centralized_account 
+  set Balance = cursor_Balance * ((100+ (select Rate from interest where Account_Type = cursor_Account_Type)/12)/100)
+  where Account_No = cursor_Account_No and (isActive)="Yes";
+  insert into interest_log(Account_No,Interest_add,Balance) values (cursor_Account_No,cursor_Balance * (((select Rate from interest where Account_Type = cursor_Account_Type)/12)/100),cursor_Balance);
+END LOOP;
+CLOSE cursor_e;
+END;
+;;
+DELIMITER ;
+
 
 call update_account_balances();
 
@@ -125,7 +154,8 @@ ON schedule every 1 month starts "2022-01-01"
 do
 	call update_fixed_account_balances();
 
-=======================================================Trigger============================================================================
+
+=======================================================================Trigger===================================================================================
 create trigger on_centralized_account_update
     after update on centralized_account
     for each row
