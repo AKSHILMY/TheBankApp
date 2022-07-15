@@ -18,6 +18,7 @@ class AddAgent extends Component {
         Phone_NO: "",
         Email: "",
         NIC: "",
+        Gender: "",
       },
     };
   }
@@ -30,7 +31,6 @@ class AddAgent extends Component {
     } else {
       event.preventDefault();
       this.props.addHandler(this.state.agent);
-      console.log(this.state.agent);
     }
     this.setState({ validated: true });
   };
@@ -49,7 +49,7 @@ class AddAgent extends Component {
           onSubmit={this.handleSubmit}
         >
           <Row className="mb-4">
-            <Form.Group as={Col} md="4" controlId="validationCustom01">
+            <Form.Group as={Col} md="3" controlId="validationCustom01">
               <Form.Label>Agent Name</Form.Label>
               <Form.Control
                 required
@@ -62,7 +62,7 @@ class AddAgent extends Component {
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom02">
+            <Form.Group as={Col} md="3" controlId="validationCustom02">
               <Form.Label>Username</Form.Label>
               <Form.Control
                 required
@@ -75,7 +75,7 @@ class AddAgent extends Component {
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustomUsername">
+            <Form.Group as={Col} md="3" controlId="validationCustomUsername">
               <Form.Label>Password</Form.Label>
               <Form.Control
                 required
@@ -88,6 +88,25 @@ class AddAgent extends Component {
               />
               <Form.Control.Feedback type="invalid">
                 Please input a password
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="3" controlId="validationCustomGender">
+              <Form.Label>Gender</Form.Label>
+              <Form.Select
+                required
+                defaultValue={this.state.agent.Gender}
+                onChange={(e) => {
+                  this.handleChange({ Gender: e.target.value });
+                }}
+              >
+                <option disabled value="">
+                  Choose..
+                </option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </Form.Select>
+              <Form.Control.Feedback type="invalid">
+                Please input the gender.
               </Form.Control.Feedback>
             </Form.Group>
           </Row>

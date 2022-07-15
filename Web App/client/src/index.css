@@ -20,6 +20,9 @@ code {
 .title:hover {
   color: black;
 }
+.dcard:hover {
+  text-decoration: none;
+}
 
 Table thead {
   position: sticky;
