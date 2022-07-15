@@ -1,19 +1,25 @@
 
 package com.example.thebankofpirates.code.ui;
 
+import android.os.Build;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.thebankofpirates.R;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.thebankofpirates.code.LoginActivity;
 import com.example.thebankofpirates.code.TransactionManager;
 import com.example.thebankofpirates.code.data.model.Transaction;
 
@@ -28,7 +34,7 @@ import java.util.Locale;
 /**
  *
  */
-public class DetailsFragment extends Fragment {
+public class DetailsFragment extends Fragment{
     private TransactionManager currentTransactionManager;
 
     public static DetailsFragment newInstance(TransactionManager transactionManager) {
@@ -56,6 +62,7 @@ public class DetailsFragment extends Fragment {
         generateTransactionsTable(rootView, logsTableLayout, transactionList);
         return rootView;
     }
+
 
     private void generateTransactionsTable(View rootView, TableLayout logsTableLayout,
                                            List<Transaction> transactionList) {
@@ -85,4 +92,5 @@ public class DetailsFragment extends Fragment {
             logsTableLayout.addView(tr);
         }
     }
+
 }

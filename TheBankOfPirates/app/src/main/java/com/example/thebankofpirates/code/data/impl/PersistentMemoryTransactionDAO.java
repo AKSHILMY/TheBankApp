@@ -6,6 +6,7 @@ import com.example.thebankofpirates.code.data.TransactionDAO;
 import com.example.thebankofpirates.code.data.model.Transaction;
 import com.example.thebankofpirates.code.data.model.TransactionType;
 import com.example.thebankofpirates.code.sql.DatabaseHelper;
+import com.example.thebankofpirates.code.ui.DetailsFragment;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class PersistentMemoryTransactionDAO implements TransactionDAO {
     public void logTransaction(String accountNo, TransactionType transactionType, double amount,String date) {
         Transaction transaction = new Transaction(accountNo, transactionType, amount,date);
         dbHelper.addTransactionLog(transaction);
+
     }
 
     @Override
