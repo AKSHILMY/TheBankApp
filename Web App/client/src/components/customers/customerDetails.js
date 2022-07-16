@@ -11,11 +11,14 @@ function CustomerDetails({
   deleteCustomer,
   fixed,
   fixedDetails,
+  withdrawDepositHandler,
 }) {
   let navigate = useNavigate();
   let { id } = useParams();
   const [enableEdit, setEnableEdit] = useState(true);
   const [validated, setValidated] = useState(false);
+  const [withdraw, setwithdraw] = useState(0);
+  const [deposit, setDeposit] = useState(0);
   const [customerDetail, setCustomerDetail] = useState(
     customers.filter((c) => c.Customer_ID === parseInt(id))[0]
   );
@@ -71,6 +74,26 @@ function CustomerDetails({
   const backEditHandler = () => {
     navigate(`../customerDetails/${id}`);
     setEnableEdit(true);
+  };
+
+  const handleWithdrwaClick = () => {
+    if (customerDetail) {
+      let balance = parseFloat(customerDetail.Balance);
+      if (parseFloat(withdraw) < balance) {
+        balance -= parseFloat(withdraw);
+        withdrawDepositHandler(balance, customerDetail.Account_No);
+        setwithdraw(0);
+      }
+    }
+  };
+
+  const handleDepositClick = () => {
+    if (customerDetail) {
+      let balance = parseFloat(customerDetail.Balance);
+      balance += parseFloat(deposit);
+      withdrawDepositHandler(balance, customerDetail.Account_No);
+      setDeposit(0);
+    }
   };
 
   return (
@@ -205,6 +228,46 @@ function CustomerDetails({
                 <td>Balance</td>
                 <td colSpan={2}>
                   {customerDetail ? customerDetail.Balance : null}
+                </td>
+              </tr>
+              <tr>
+                <td>Withdraw</td>
+                <td>
+                  <Form.Control
+                    className="mb-2"
+                    type="number"
+                    defaultValue="0"
+                    onChange={(e) => {
+                      setwithdraw(e.target.value);
+                    }}
+                  />
+                  <Button
+                    variant="danger"
+                    type="button"
+                    onClick={() => handleWithdrwaClick()}
+                  >
+                    Withdraw
+                  </Button>
+                </td>
+              </tr>
+              <tr>
+                <td>Deposit</td>
+                <td>
+                  <Form.Control
+                    className="mb-2"
+                    type="number"
+                    defaultValue={deposit}
+                    onChange={(e) => {
+                      setDeposit(e.target.value);
+                    }}
+                  />
+                  <Button
+                    variant="success"
+                    type="button"
+                    onClick={() => handleDepositClick()}
+                  >
+                    Deposit
+                  </Button>
                 </td>
               </tr>
               {fixed.includes(

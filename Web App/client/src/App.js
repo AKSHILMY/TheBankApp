@@ -20,6 +20,8 @@ function App() {
   const [agents, setAgents] = useState([]);
   const [fixed, setFixed] = useState([]);
   const [fixedDetails, setFixedDetails] = useState([]);
+  const [customerCount, setCustomerCount] = useState(0);
+  const [agentCount, setAgentCount] = useState(0);
 
   const retrieveCustomers = async () => {
     const response = await api.get("/customers");
@@ -71,9 +73,18 @@ function App() {
     return response.data;
   };
 
+  const withdrawDepositAmount = async (bal, Account_No) => {
+    const response = await api.post("/customers/withdrawDeposit", {
+      Balance: bal,
+      Account_No: Account_No,
+    });
+    return response.data;
+  };
+
   useEffect(() => {
     const getAllCustomers = async () => {
       const allcustomers = await retrieveCustomers();
+      console.log(allcustomers);
       if (allcustomers.customers) {
         setCustomers(allcustomers.customers);
       }
@@ -86,6 +97,10 @@ function App() {
       }
       if (allcustomers.fixedDetails) {
         setFixedDetails(allcustomers.fixedDetails);
+      }
+      if (allcustomers.agentCount && allcustomers.customerCount) {
+        setAgentCount(allcustomers.agentCount[0].agentCount);
+        setCustomerCount(allcustomers.customerCount[0].customertCount);
       }
     };
 
@@ -148,6 +163,17 @@ function App() {
     DeleteAgent();
   }
 
+  const withdrawDepositHandler = (bal, Account_No) => {
+    const WithdrawDepositBal = async () => {
+      const withdrawdepositamount = await withdrawDepositAmount(
+        bal,
+        Account_No
+      );
+      console.log(withdrawdepositamount);
+    };
+    WithdrawDepositBal();
+  };
+
   return (
     <Router>
       <NavBar />
@@ -178,6 +204,7 @@ function App() {
                 updateCustomer={updateCustomerHandler}
                 deleteCustomer={deleteCustomerHandler}
                 fixedDetails={fixedDetails}
+                withdrawDepositHandler={withdrawDepositHandler}
               >
                 {" "}
               </CustomerDetails>
@@ -206,7 +233,7 @@ function App() {
           path="/"
           element={
             <Dashboard
-              count={{ customers: customers.length, agents: agents.length }}
+              count={{ customers: customerCount, agents: agentCount }}
             />
           }
         />

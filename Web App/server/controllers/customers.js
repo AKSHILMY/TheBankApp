@@ -13,7 +13,16 @@ export const getCustomers = (req, res) => {
       return database("getFixedDetails", []);
     })
     .then(function (result2) {
-      const All = { ...customers, fixedDetails: result2 };
+      customers = { ...customers, fixedDetails: result2 };
+      // res.send(All);
+      return database("customerCount", []);
+    })
+    .then(function (result3) {
+      customers = { ...customers, customerCount: result3 };
+      return database("agentCount", []);
+    })
+    .then(function (result4) {
+      const All = { ...customers, agentCount: result4 };
       res.send(All);
     })
     .catch((err) => {
@@ -84,6 +93,16 @@ export const deleteCustomer = (req, res) => {
     .then(function (result) {
       database("deleteCustomer2", [req.body.Customer_ID]);
       res.send(`${req.body.Customer_ID} Deleted`);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const withdraw = (req, res) => {
+  database("withdrawDeposit", [req.body.Balance, req.body.Account_No])
+    .then(function (result) {
+      res.send(`${req.body.Balance} amount updated to ${req.body.Account_No}`);
     })
     .catch((err) => {
       console.log(err);

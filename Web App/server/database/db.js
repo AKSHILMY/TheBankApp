@@ -36,6 +36,11 @@ var queries = {
   deleteAgent: "DELETE FROM agent WHERE Agent_ID=?;",
   addAgent:
     "INSERT INTO agent(Name,NIC,DOB,Phone_No,Email,Username,Password,Gender) VALUES(?,?,?,?,?,?,?,?);",
+  withdrawDeposit:
+    "UPDATE centralized_account SET Balance=? WHERE Account_No=?;",
+  customerCount:
+    "SELECT COUNT(Account_No) as customertCount FROM centralized_account;",
+  agentCount: "SELECT COUNT(Agent_ID) as agentCount FROM  agent;",
 };
 
 export function database(queryName, queryParams) {

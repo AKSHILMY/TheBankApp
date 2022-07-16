@@ -7,6 +7,7 @@ import {
   deleteCustomer,
   updateCustomer,
   createFixedAccount,
+  withdraw,
 } from "../controllers/customers.js";
 
 const router = express.Router();
@@ -15,6 +16,7 @@ router.get("/", getCustomers);
 
 router.post("/", createCustomer);
 router.post("/fixed", createFixedAccount);
+router.post("/withdrawDeposit", withdraw);
 
 router.get("/:id", getCustomer);
 
