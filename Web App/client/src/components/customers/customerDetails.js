@@ -113,7 +113,7 @@ function CustomerDetails({
                     type="text"
                     required
                     defaultValue={customerDetail ? customerDetail.Name : ""}
-                    disabled={enableEdit}
+                    disabled={true}
                     onChange={(e) => {
                       handleChange({ Name: e.target.value });
                     }}
@@ -127,7 +127,7 @@ function CustomerDetails({
                     type="text"
                     required
                     defaultValue={customerDetail ? customerDetail.Username : ""}
-                    disabled={enableEdit}
+                    disabled={true}
                     onChange={(e) => {
                       handleChange({ Username: e.target.value });
                     }}
@@ -296,7 +296,11 @@ function CustomerDetails({
                   </tr>
                   <tr>
                     <td>Date of deposite</td>
-                    <td>{fixedDetail ? fixedDetail.DateofDeposit : ""}</td>
+                    <td>
+                      {fixedDetail
+                        ? fixedDetail.DateofDeposit.slice(0, 10)
+                        : ""}
+                    </td>
                   </tr>
                 </>
               ) : null}

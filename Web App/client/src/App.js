@@ -139,7 +139,7 @@ function App() {
   }
 
   function updateCustomerHandler(customer) {
-    console.log(customer);
+    // console.log(customer);
     const UpdateCustomer = async () => {
       const customerUpdate = await updateCustomer(customer);
       console.log(customerUpdate);

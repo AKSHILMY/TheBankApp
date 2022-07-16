@@ -110,6 +110,7 @@ export const withdraw = (req, res) => {
 };
 
 export const updateCustomer = (req, res) => {
+  console.log(req.body);
   database("updateCustomer1", [req.body.Account_Type, req.body.Account_No])
     .then(function () {
       database("updateCustomer2", [
