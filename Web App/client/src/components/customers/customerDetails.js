@@ -88,7 +88,7 @@ function CustomerDetails({
   };
 
   const handleDepositClick = () => {
-    if (customerDetail && parseFloat(withdraw) > 0) {
+    if (customerDetail && parseFloat(deposit) > 0) {
       let balance = parseFloat(customerDetail.Balance);
       balance += parseFloat(deposit);
       withdrawDepositHandler(balance, customerDetail.Account_No);
@@ -272,6 +272,7 @@ function CustomerDetails({
                   </Button>
                 </td>
               </tr>
+
               {fixed.includes(
                 customerDetail ? customerDetail.Customer_ID : ""
               ) ? (
