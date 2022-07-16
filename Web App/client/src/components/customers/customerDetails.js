@@ -11,11 +11,14 @@ function CustomerDetails({
   deleteCustomer,
   fixed,
   fixedDetails,
+  withdrawDepositHandler,
 }) {
   let navigate = useNavigate();
   let { id } = useParams();
   const [enableEdit, setEnableEdit] = useState(true);
   const [validated, setValidated] = useState(false);
+  const [withdraw, setwithdraw] = useState(0);
+  const [deposit, setDeposit] = useState(0);
   const [customerDetail, setCustomerDetail] = useState(
     customers.filter((c) => c.Customer_ID === parseInt(id))[0]
   );
@@ -73,6 +76,26 @@ function CustomerDetails({
     setEnableEdit(true);
   };
 
+  const handleWithdrwaClick = () => {
+    if (customerDetail) {
+      let balance = parseFloat(customerDetail.Balance);
+      if (parseFloat(withdraw) < balance && parseFloat(withdraw) > 0) {
+        balance -= parseFloat(withdraw);
+        withdrawDepositHandler(balance, customerDetail.Account_No);
+        setwithdraw(0);
+      }
+    }
+  };
+
+  const handleDepositClick = () => {
+    if (customerDetail && parseFloat(deposit) > 0) {
+      let balance = parseFloat(customerDetail.Balance);
+      balance += parseFloat(deposit);
+      withdrawDepositHandler(balance, customerDetail.Account_No);
+      setDeposit(0);
+    }
+  };
+
   return (
     <>
       <Container>
@@ -90,7 +113,7 @@ function CustomerDetails({
                     type="text"
                     required
                     defaultValue={customerDetail ? customerDetail.Name : ""}
-                    disabled={enableEdit}
+                    disabled={true}
                     onChange={(e) => {
                       handleChange({ Name: e.target.value });
                     }}
@@ -104,7 +127,7 @@ function CustomerDetails({
                     type="text"
                     required
                     defaultValue={customerDetail ? customerDetail.Username : ""}
-                    disabled={enableEdit}
+                    disabled={true}
                     onChange={(e) => {
                       handleChange({ Username: e.target.value });
                     }}
@@ -207,6 +230,49 @@ function CustomerDetails({
                   {customerDetail ? customerDetail.Balance : null}
                 </td>
               </tr>
+              <tr>
+                <td>Withdraw</td>
+                <td>
+                  <Form.Control
+                    className="mb-2"
+                    type="number"
+                    min="0"
+                    defaultValue="0"
+                    onChange={(e) => {
+                      setwithdraw(e.target.value);
+                    }}
+                  />
+                  <Button
+                    variant="danger"
+                    type="button"
+                    onClick={() => handleWithdrwaClick()}
+                  >
+                    Withdraw
+                  </Button>
+                </td>
+              </tr>
+              <tr>
+                <td>Deposit</td>
+                <td>
+                  <Form.Control
+                    className="mb-2"
+                    type="number"
+                    min="0"
+                    defaultValue={deposit}
+                    onChange={(e) => {
+                      setDeposit(e.target.value);
+                    }}
+                  />
+                  <Button
+                    variant="success"
+                    type="button"
+                    onClick={() => handleDepositClick()}
+                  >
+                    Deposit
+                  </Button>
+                </td>
+              </tr>
+
               {fixed.includes(
                 customerDetail ? customerDetail.Customer_ID : ""
               ) ? (
@@ -230,7 +296,11 @@ function CustomerDetails({
                   </tr>
                   <tr>
                     <td>Date of deposite</td>
-                    <td>{fixedDetail ? fixedDetail.DateofDeposit : ""}</td>
+                    <td>
+                      {fixedDetail
+                        ? fixedDetail.DateofDeposit.slice(0, 10)
+                        : ""}
+                    </td>
                   </tr>
                 </>
               ) : null}

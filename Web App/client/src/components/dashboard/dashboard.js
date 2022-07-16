@@ -13,7 +13,7 @@ export default function Dashboard({ count }) {
           <Link to="/customers">
             <Cards
               variant="Primary"
-              header="Customers"
+              header="Accounts"
               count={count.customers}
             />
           </Link>
