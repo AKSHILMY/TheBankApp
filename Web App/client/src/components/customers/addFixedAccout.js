@@ -79,6 +79,7 @@ export default function AddFixedAccout(props) {
             <Form.Label>Amount</Form.Label>
             <Form.Control
               type="number"
+              min="0"
               required
               placeholder="Provide an amount"
               defaultValue=""

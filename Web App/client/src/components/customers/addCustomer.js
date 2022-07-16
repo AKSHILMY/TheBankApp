@@ -190,6 +190,7 @@ export default class addCustomer extends Component {
               <Form.Label>Amount</Form.Label>
               <Form.Control
                 type="number"
+                min="0"
                 required
                 placeholder="Provide an amount"
                 defaultValue={this.state.customer.amount}

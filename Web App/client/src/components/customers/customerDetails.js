@@ -79,7 +79,7 @@ function CustomerDetails({
   const handleWithdrwaClick = () => {
     if (customerDetail) {
       let balance = parseFloat(customerDetail.Balance);
-      if (parseFloat(withdraw) < balance) {
+      if (parseFloat(withdraw) < balance && parseFloat(withdraw) > 0) {
         balance -= parseFloat(withdraw);
         withdrawDepositHandler(balance, customerDetail.Account_No);
         setwithdraw(0);
@@ -88,7 +88,7 @@ function CustomerDetails({
   };
 
   const handleDepositClick = () => {
-    if (customerDetail) {
+    if (customerDetail && parseFloat(withdraw) > 0) {
       let balance = parseFloat(customerDetail.Balance);
       balance += parseFloat(deposit);
       withdrawDepositHandler(balance, customerDetail.Account_No);
@@ -236,6 +236,7 @@ function CustomerDetails({
                   <Form.Control
                     className="mb-2"
                     type="number"
+                    min="0"
                     defaultValue="0"
                     onChange={(e) => {
                       setwithdraw(e.target.value);
@@ -256,6 +257,7 @@ function CustomerDetails({
                   <Form.Control
                     className="mb-2"
                     type="number"
+                    min="0"
                     defaultValue={deposit}
                     onChange={(e) => {
                       setDeposit(e.target.value);
