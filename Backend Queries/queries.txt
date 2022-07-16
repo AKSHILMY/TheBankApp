@@ -26,6 +26,11 @@ SET Account_Type=?
 WHERE Account_No=?;
 
 UPDATE centralized_account
+SET Balance=?
+WHERE Account_No=?;
+
+
+UPDATE centralized_account
 SET Special_Request_Permission=?
 WHERE Account_No=?;
 
