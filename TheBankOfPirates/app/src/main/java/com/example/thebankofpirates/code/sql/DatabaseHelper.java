@@ -8,12 +8,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.thebankofpirates.code.data.model.Account;
 import com.example.thebankofpirates.code.data.model.Transaction;
 import com.example.thebankofpirates.code.data.model.TransactionType;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,6 +23,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private final Context context;
@@ -92,6 +101,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
+
     }
 
     @Override
@@ -99,6 +109,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " +LOCAL_ACCOUNT +";");
         db.execSQL("DROP TABLE IF EXISTS " +LOCAL_TRANSACTION_RECORDS +";");
         onCreate(db);
+    }
+    public void api(){
+        HttpUrl url = new HttpUrl.Builder().scheme("http").host("192.168.1.50").port(5000).addPathSegment("customers").build();
+        Log.d("URL",url.toString());
+//        String url = "http://192.168.79.1:5000/customers";
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url(url).build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()){
+                    Log.d("CUSTOMERS",response.body().string());
+                }else{
+                    Log.d("CUSTOMERS NO","NOT");
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                e.printStackTrace();
+                Log.d("FAIL","FAIL");
+            }
+        });
     }
 
     public Map<String,Account> getAccounts() {
@@ -120,6 +153,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //        db.close();
 //        Account account1 = new Account("1234567890",23.34,"Adult","YES");
 //        accounts.put(account1.getAccountNo(),account1);
+        api();
         return accounts;
 
     }
