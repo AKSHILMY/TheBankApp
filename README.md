@@ -43,12 +43,6 @@ ahead to the next level.*
   <img src="https://user-images.githubusercontent.com/77115237/205449050-aaafdeac-0102-461a-97c4-64cce7f745f1.png" width="70%"
 <p>
 
-    
-## Hardware Interface
-We should use a touch screen/ keypad for a user-friendly interaction with a customer and also 
-simple GUIs that makes everyone possible to use the system with no prior knowledge and 
-experience. Should have a good internet connection to connect with the central database.
-
 ### Interest calculation
 
 All the `interest` calculating process are handled only by the central server. Interest rates and 
@@ -71,6 +65,14 @@ are as follows,
 "1 year"      : "14%"
 "3 years"     : "15%"
 ```
+
+
+    
+## Hardware Interface
+We should use a touch screen/ keypad for a user-friendly interaction with a customer and also 
+simple GUIs that makes everyone possible to use the system with no prior knowledge and 
+experience. Should have a good internet connection to connect with the central database.
+
 
 
 ### Project directory layout
